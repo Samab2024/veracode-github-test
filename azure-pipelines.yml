@@ -8,6 +8,7 @@ trigger:
 pool:
   name: Default
 steps:
+- ${{ if eq( variables['$(Build.SourceBranchName)'], 'main') }}:
 - task: Maven@4
   inputs:
     mavenPomFile: 'app/pom.xml'
@@ -26,20 +27,47 @@ steps:
 
 - task: Veracode@3
   inputs:
-    ConnectionDetailsSelection: 'Service Connection'
-    AnalysisService: 'Veracode API'
-    veracodeAppProfile: 'New ADO'
-    version: '$(build.buildNumber)'
-    filepath: 'app/target/verademo.war'
-    optargs: '-deleteincompletescan 2'
-    ${{ if eq( variables['$(Build.SourceBranchName)'], 'main') }}:
-        sandboxName: 'IF'
-        createProfile: true
-        createSandBox: true
-    ${{ else }}:
-        sandboxName: 'ELSE'
-        createProfile: true
-        createSandBox: true
-    failBuildIfUploadAndScanBuildStepFails: true
-    importResults: true
-    maximumWaitTime: '360'
+              ConnectionDetailsSelection: 'Service Connection'
+              AnalysisService: 'Veracode API'
+              veracodeAppProfile: 'New ADO'
+              version: '$(build.buildNumber)'
+              filepath: 'app/target/verademo.war'
+              optargs: '-deleteincompletescan 2'
+              sandboxName: 'IF'
+              createProfile: true
+              createSandBox: true
+              failBuildIfUploadAndScanBuildStepFails: true
+              importResults: true
+              maximumWaitTime: '360'
+
+- ${{ else }}:
+- task: Maven@4
+  inputs:
+    mavenPomFile: 'app/pom.xml'
+    publishJUnitResults: true
+    testResultsFiles: '**/surefire-reports/TEST-*.xml'
+    javaHomeOption: 'JDKVersion'
+    mavenVersionOption: 'Default'
+    mavenAuthenticateFeed: false
+    effectivePomSkip: false
+    sonarQubeRunAnalysis: false
+
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: echo '$(Build.SourceBranchName)'
+
+- task: Veracode@3
+  inputs:
+              ConnectionDetailsSelection: 'Service Connection'
+              AnalysisService: 'Veracode API'
+              veracodeAppProfile: 'New ADO'
+              version: '$(build.buildNumber)'
+              filepath: 'app/target/verademo.war'
+              optargs: '-deleteincompletescan 2'
+              sandboxName: 'ELSE'
+              createProfile: true
+              createSandBox: true
+              failBuildIfUploadAndScanBuildStepFails: true
+              importResults: true
+              maximumWaitTime: '360'
