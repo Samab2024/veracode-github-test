@@ -26,9 +26,11 @@ steps:
     veracodeAppProfile: 'New ADO'
     version: '$(build.buildNumber)'
     filepath: 'app/target/verademo.war'
-    ${{ if eq( variables['$(Build.SourceBranchName)'], 'master') }}:
+    optargs: '-deleteincompletescan 2'
+    ${{ if eq( variables['$(Build.SourceBranchName)'], 'main') }}:
+        sandboxName: 'IF'
         createProfile: true
-        createSandBox: false
+        createProfile: true
     ${{ else }}:
         sandboxName: 'ELSE'
         createProfile: true
