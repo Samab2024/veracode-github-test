@@ -19,6 +19,9 @@ steps:
     effectivePomSkip: false
     sonarQubeRunAnalysis: false
 
+- task: Bash@3
+  inputs:
+    filePath: 'echo $(Build.SourceBranchName)'
 - task: Veracode@3
   inputs:
     ConnectionDetailsSelection: 'Service Connection'
