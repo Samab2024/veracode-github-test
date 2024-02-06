@@ -30,7 +30,7 @@ steps:
     ${{ if eq( variables['$(Build.SourceBranchName)'], 'main') }}:
         sandboxName: 'IF'
         createProfile: true
-        createProfile: true
+        createSandBox: true
     ${{ else }}:
         sandboxName: 'ELSE'
         createProfile: true
