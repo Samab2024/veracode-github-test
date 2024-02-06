@@ -21,7 +21,9 @@ steps:
 
 - task: Bash@3
   inputs:
-    filePath: 'echo $(Build.SourceBranchName)'
+    targetType: 'inline'
+    script: echo '$(Build.SourceBranchName)'
+
 - task: Veracode@3
   inputs:
     ConnectionDetailsSelection: 'Service Connection'
