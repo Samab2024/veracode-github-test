@@ -19,17 +19,26 @@ steps:
     effectivePomSkip: false
     sonarQubeRunAnalysis: false
 
+# - task: Veracode@3
+#   inputs:
+#               ConnectionDetailsSelection: 'Service Connection'
+#               AnalysisService: 'Veracode API'
+#               veracodeAppProfile: 'New ADO'
+#               # version: 'New ADO-$(build.buildNumber)-test'
+#               filepath: 'app/target/verademo.war'
+#               optargs: '-deleteincompletescan 2'
+#               sandboxName: 'IF'
+#               createProfile: true
+#               createSandBox: true
+#               failBuildIfUploadAndScanBuildStepFails: true
+#               importResults: true
+#               maximumWaitTime: '360'
+
 - task: Veracode@3
   inputs:
-              ConnectionDetailsSelection: 'Service Connection'
-              AnalysisService: 'Veracode API'
-              veracodeAppProfile: 'New ADO'
-              # version: 'New ADO-$(build.buildNumber)-test'
-              filepath: 'app/target/verademo.war'
-              optargs: '-deleteincompletescan 2'
-              sandboxName: 'IF'
-              createProfile: true
-              createSandBox: true
-              failBuildIfUploadAndScanBuildStepFails: true
-              importResults: true
-              maximumWaitTime: '360'
+    ConnectionDetailsSelection: 'Service Connection'
+    veracodeAppProfile: 'New ADO'
+    filepath: 'app/target/verademo.war'
+    optargs: '-deleteincompletescan 2'
+    importResults: true
+    maximumWaitTime: '360'
