@@ -43,4 +43,5 @@ steps:
     optargs: '-deleteincompletescan 2'
     importResults: true
     maximumWaitTime: '360'
+    failBuildIfUploadAndScanBuildStepFails: true
     continueOnError: true 
