@@ -39,6 +39,7 @@ steps:
     ConnectionDetailsSelection: 'Service Connection'
     AnalysisService: 'Veracode API'
     veracodeAppProfile: 'New ADO'
+    version: '20240308.9'
     filepath: 'app/target/verademo.war'
     optargs: '-deleteincompletescan 2'
     importResults: true
