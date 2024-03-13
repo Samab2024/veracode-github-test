@@ -37,18 +37,18 @@ steps:
 #               importResults: true
 #               maximumWaitTime: '360'
 
-- task: Veracode@3
-  inputs:
-    ConnectionDetailsSelection: 'Service Connection'
-    AnalysisService: 'Veracode API'
-    veracodeAppProfile: 'New ADO'
-    version: '20240308.9'
-    filepath: 'app/target/verademo.war'
-    optargs: '-deleteincompletescan 2'
-    importResults: true
-    maximumWaitTime: '360'
-    failBuildIfUploadAndScanBuildStepFails: false
-    continueOnError: true 
+# - task: Veracode@3
+#   inputs: 
+#     ConnectionDetailsSelection: 'Service Connection'
+#     AnalysisService: 'Veracode API'
+#     veracodeAppProfile: 'New ADO'
+#     version: '20240308.9'
+#     filepath: 'app/target/verademo.war'
+#     optargs: '-deleteincompletescan 2'
+#     importResults: true
+#     maximumWaitTime: '360'
+#     failBuildIfUploadAndScanBuildStepFails: false
+#     continueOnError: true 
 
 # - task: CmdLine@2
 #   inputs:
@@ -69,9 +69,16 @@ steps:
 #         echo "##[warning]Build Already exist"
 #       fi
 
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: |
+      (curl -sS "https://search.maven.org/solrsearch/select?q=g:%22com.veracode.vosp.api.wrappers%22&rows=20&wt=json" | jq -r '.response.docs[0].latestVersion') && curl -sS -o veracode-wrapper.jar "https://repo1.maven.org/maven2/com/veracode/vosp/api/wrappers/vosp-api-wrappers-java/${VERACODE_WRAPPER_VERSION}/vosp-api-wrappers-java-${VERACODE_WRAPPER_VERSION}.jar"
+      java -jar veracode-wrapper.jar -vid $VERACODE_API_ID -vkey $VERACODE_API_KEY -action uploadandscan -appname "myapp" -filepath "app/target/verademo.war" -createprofile false -version '20240308.9' -autoscan true > trace
+
 - task: PublishPipelineArtifact@1
   inputs:
-    targetPath: '$(System.DefaultWorkingDirectory)/Debug'
+    targetPath: '$(System.DefaultWorkingDirectory)/trace'
     artifact: 'file_result.json'
 
 - task: Bash@3
