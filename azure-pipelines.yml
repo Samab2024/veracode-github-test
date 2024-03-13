@@ -73,8 +73,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      curl -sS -o $(System.DefaultWorkingDirectory)/VeracodeJavaAPI.jar "https://repo1.maven.org/maven2/com/veracode/vosp/api/wrappers/vosp-api-wrappers-java/23.8.12.0/vosp-api-wrappers-java-23.8.12.0.jar"
-      java -jar $(System.DefaultWorkingDirectory)/VeracodeJavaAPI.jar -vid $VERACODE_API_ID -vkey $VERACODE_API_KEY -action uploadandscan -appname "myapp" -filepath "app/target/verademo.war" -createprofile false -version '20240308.9' -autoscan true > trace
+      ((curl -sS -o $(System.DefaultWorkingDirectory)/VeracodeJavaAPI.jar "https://repo1.maven.org/maven2/com/veracode/vosp/api/wrappers/vosp-api-wrappers-java/23.8.12.0/vosp-api-wrappers-java-23.8.12.0.jar") && (java -jar $(System.DefaultWorkingDirectory)/VeracodeJavaAPI.jar -vid $VERACODE_API_ID -vkey $VERACODE_API_KEY -action uploadandscan -appname "myapp" -filepath "app/target/verademo.war" -createprofile false -version '20240308.9' -autoscan true)) > trace
 
 - task: PublishPipelineArtifact@1
   inputs:
