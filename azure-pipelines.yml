@@ -68,7 +68,7 @@ steps:
 
 - task: PublishPipelineArtifact@1
   inputs:
-    targetPath: '$(System.DefaultWorkingDirectory)/s/trace'
+    targetPath: '$(System.DefaultWorkingDirectory)/trace'
     artifact: 'file_result.pcap'
     publishLocation: 'pipeline'
 
