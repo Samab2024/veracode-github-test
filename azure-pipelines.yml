@@ -46,3 +46,25 @@ steps:
     maximumWaitTime: '360'
     failBuildIfUploadAndScanBuildStepFails: false
     continueOnError: true 
+
+- task: CmdLine@2
+  inputs:
+    script: |
+      # here we get the link for the previous task logs
+      previousTask=$(curl -s -X GET -H "Authorization: Bearer $(System.AccessToken)" -H "Content-Type: application/json" https://dev.azure.com/{organization}/{project}/_apis/build/builds/{buildId}/timeline/?api-version=5.1 | jq -r '.records[] | select(.name == "Veracode@3") | .log.url' )
+      
+      #put the logs in a file or you can simply grep on them
+      curl -s -X GET -H "Authorization: Bearer $(System.AccessToken)" -H "Content-Type: application/json" "${previousTask}" | sed 's/^.*[0-9]Z //g' > $(System.DefaultWorkingDirectory)/log
+      
+      #grep on that file
+      result=$(grep "already exists" $(System.DefaultWorkingDirectory)/log)
+      echo $result
+      if [ -z "$result" ]
+      then
+        echo "No expected error message!"
+        cat $(System.DefaultWorkingDirectory)/log
+        exit 1;
+      else
+        echo "Found expected error message!"
+        rm -rf $(System.DefaultWorkingDirectory)/log
+      fi
