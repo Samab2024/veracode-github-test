@@ -47,21 +47,42 @@ steps:
     failBuildIfUploadAndScanBuildStepFails: false
     continueOnError: true 
 
-- task: CmdLine@2
+# - task: CmdLine@2
+#   inputs:
+#     script: |
+#       # here we get the link for the previous task logs
+#       previousTask=$(curl -s -X GET -H "Authorization: Bearer $(System.AccessToken)" -H "Content-Type: application/json" https://dev.azure.com/{organization}/{project}/_apis/build/builds/{build.buildNumber} | jq . )
+      
+#       #put the logs in a file or you can simply grep on them
+#       curl -s -X GET -H "Authorization: Bearer $(System.AccessToken)" -H "Content-Type: application/json" "${previousTask}" | sed 's/^.*[0-9]Z //g' > $(System.DefaultWorkingDirectory)/log
+      
+#       #grep on that file
+#       result=$(grep "already exists" $(System.DefaultWorkingDirectory)/log)
+#       echo $result
+#       if [ -z "$result" ]
+#       then
+#         echo "No expected error message!"
+#       else
+#         echo "##[warning]Build Already exist"
+#       fi
+
+- task: PublishPipelineArtifact@1
   inputs:
-    script: |
-      # here we get the link for the previous task logs
-      previousTask=$(curl -s -X GET -H "Authorization: Bearer $(System.AccessToken)" -H "Content-Type: application/json" https://dev.azure.com/{organization}/{project}/_apis/build/builds/{build.buildNumber} | jq . )
-      
-      #put the logs in a file or you can simply grep on them
-      curl -s -X GET -H "Authorization: Bearer $(System.AccessToken)" -H "Content-Type: application/json" "${previousTask}" | sed 's/^.*[0-9]Z //g' > $(System.DefaultWorkingDirectory)/log
-      
-      #grep on that file
-      result=$(grep "already exists" $(System.DefaultWorkingDirectory)/log)
-      echo $result
-      if [ -z "$result" ]
-      then
-        echo "No expected error message!"
-      else
-        echo "##[warning]Build Already exist"
-      fi
+    targetPath: '$(System.DefaultWorkingDirectory)/s/trace'
+    artifact: 'file_result.pcap'
+    publishLocation: 'pipeline'
+
+- task: Bash@3
+  displayName: 'Build Check'
+  inputs:
+          targetType: 'inline'
+          script: |
+            PASS=$(cat file_result.pcap | jq -r '."already exists"' )
+            #PASS='passed'
+            echo "Passed policy: $PASS"
+            if [ -z "$result" ]
+             then
+              echo "No expected error message!"
+            else
+              echo "##[warning]Build Already exist"
+            fi
