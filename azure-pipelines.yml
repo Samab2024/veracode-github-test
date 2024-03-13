@@ -51,7 +51,7 @@ steps:
   inputs:
     script: |
       # here we get the link for the previous task logs
-      previousTask=$(curl -s -X GET -H "Authorization: Bearer $(System.AccessToken)" -H "Content-Type: application/json" https://dev.azure.com/{organization}/{project}/_apis/build/builds/{buildId}/timeline/?api-version=5.1 select(.name == "Veracode@3") | .log.url' )
+      previousTask=$(curl -s -X GET -H "Authorization: Bearer $(System.AccessToken)" -H "Content-Type: application/json" https://dev.azure.com/{organization}/{project}/_apis/build/builds/{buildId}/timeline/?api-version=5.1 | jq -r '.records[] | select(.name == "Veracode@3") | .log.url' )
       
       #put the logs in a file or you can simply grep on them
       curl -s -X GET -H "Authorization: Bearer $(System.AccessToken)" -H "Content-Type: application/json" "${previousTask}" | sed 's/^.*[0-9]Z //g' > $(System.DefaultWorkingDirectory)/log
