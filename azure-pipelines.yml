@@ -7,6 +7,9 @@ trigger:
 - main
 pool:
   name: Default
+variables:
+   buildConfiguration: 'Debug'
+
 steps:
 - task: Maven@4
   inputs:
@@ -68,9 +71,8 @@ steps:
 
 - task: PublishPipelineArtifact@1
   inputs:
-    targetPath: '$(System.DefaultWorkingDirectory)/trace'
-    artifact: 'file_result.pcap'
-    publishLocation: 'pipeline'
+    targetPath: '$(System.DefaultWorkingDirectory)/Debug'
+    artifact: 'file_result.json'
 
 - task: Bash@3
   displayName: 'Build Check'
