@@ -76,7 +76,7 @@ steps:
       # Write your commands here   
       touch trace && chmod 766 trace
       ls -lrt
-      java -jar VeracodeJavaAPI.jar -vid '5d25539b2665d9059bdffe4cd1e8b826' -vkey '720177737f79836b741a2b335b5a152197d985ea23ff7eb51f76657eabd441ea5596170b3eb2d8ca77bf7f4d6b595b6fa80007cbe72be1083c640725e19e96fd' -action uploadandscan -appname "myapp" -filepath "app/target/verademo.war" -createprofile false -version "20240308.9" -autoscan true
+      java -jar VeracodeJavaAPI.jar -vid '5d25539b2665d9059bdffe4cd1e8b826' -vkey '720177737f79836b741a2b335b5a152197d985ea23ff7eb51f76657eabd441ea5596170b3eb2d8ca77bf7f4d6b595b6fa80007cbe72be1083c640725e19e96fd' -action uploadandscan -appname "New ADO" -filepath "app/target/verademo.war" -createprofile false -version "20240308.9" -autoscan true > trace
 
 - task: PublishPipelineArtifact@1
   inputs:
