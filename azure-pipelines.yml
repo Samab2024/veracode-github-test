@@ -75,7 +75,7 @@ steps:
     script: |
       # Write your commands here   
       ls -lrt
-      java -jar VeracodeJavaAPI.jar -vid $VERACODE_API_ID -vkey $VERACODE_API_KEY -action uploadandscan -appname "myapp" -filepath "app/target/verademo.war" -createprofile false -version "20240308.9" -autoscan true > $(System.DefaultWorkingDirectory)/trace
+      java -jar VeracodeJavaAPI.jar -vid $VERACODE_API_ID -vkey $VERACODE_API_KEY -action uploadandscan -appname "myapp" -filepath "app/target/verademo.war" -createprofile false -version "20240308.9" -autoscan true
 
 - task: PublishPipelineArtifact@1
   inputs:
