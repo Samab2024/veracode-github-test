@@ -69,7 +69,8 @@ steps:
 #         echo "##[warning]Build Already exist"
 #       fi
 
-- task: Bash@3
+- task: PowerShell@2
+  continueOnError: true
   inputs:
     targetType: 'inline'
     script: |
