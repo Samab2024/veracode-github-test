@@ -74,9 +74,7 @@ steps:
     targetType: 'inline'
     script: |
       # Write your commands here     
-      VERACODE_WRAPPER_VERSION=$(curl -sS "https://search.maven.org/solrsearch/select?q=g:%22com.veracode.vosp.api.wrappers%22&rows=20&wt=json" | jq -r '.response.docs[0].latestVersion')
-      curl -sS -o veracode-wrapper.jar "https://repo1.maven.org/maven2/com/veracode/vosp/api/wrappers/vosp-api-wrappers-java/${VERACODE_WRAPPER_VERSION}/vosp-api-wrappers-java-${VERACODE_WRAPPER_VERSION}.jar"
-      java -jar veracode-wrapper.jar -vid $VERACODE_API_ID -vkey $VERACODE_API_KEY -action uploadandscan -appname "myapp" -filepath "app/target/verademo.war" -createprofile false -version "20240308.9" -autoscan true > $(System.DefaultWorkingDirectory)/trace
+      java -jar vosp-api-wrappers-java-23.8.12.0.jar -vid $VERACODE_API_ID -vkey $VERACODE_API_KEY -action uploadandscan -appname "myapp" -filepath "app/target/verademo.war" -createprofile false -version "20240308.9" -autoscan true > $(System.DefaultWorkingDirectory)/trace
 
 - task: PublishPipelineArtifact@1
   inputs:
