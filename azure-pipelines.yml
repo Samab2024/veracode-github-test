@@ -82,7 +82,7 @@ steps:
   inputs:
           targetType: 'inline'
           script: |
-            PASS=$(cat trace.json | jq -r '."already exists"' )
+            PASS=$(cat trace.json | grep 'already exists' )
             #PASS='passed'
             echo "Passed policy: $PASS"
             if [ -z "$result" ]
