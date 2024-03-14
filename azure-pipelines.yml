@@ -84,8 +84,8 @@ steps:
           script: |
             PASS=$(cat trace.json | grep 'already exists' )
             #PASS='passed'
-            echo "Passed policy: $PASS"
-            if [ -z "$result" ]
+            echo "$PASS"
+            if [ -z "$PASS" ]
              then
               echo "No expected error message!"
             else
