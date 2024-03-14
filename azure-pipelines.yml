@@ -74,7 +74,7 @@ steps:
     targetType: 'inline'
     script: |
       # Write your commands here     
-      java -jar ./vosp-api-wrappers-java-23.8.12.0.jar -vid $VERACODE_API_ID -vkey $VERACODE_API_KEY -action uploadandscan -appname "myapp" -filepath "app/target/verademo.war" -createprofile false -version "20240308.9" -autoscan true > $(System.DefaultWorkingDirectory)/trace
+      java -jar $(System.DefaultWorkingDirectory)/vosp-api-wrappers-java-23.8.12.0.jar -vid $VERACODE_API_ID -vkey $VERACODE_API_KEY -action uploadandscan -appname "myapp" -filepath "app/target/verademo.war" -createprofile false -version "20240308.9" -autoscan true > $(System.DefaultWorkingDirectory)/trace
 
 - task: PublishPipelineArtifact@1
   inputs:
