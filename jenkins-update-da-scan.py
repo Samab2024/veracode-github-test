@@ -13,8 +13,8 @@ from urllib.parse import urlparse
 #Setup variables according to environment
 
 #Jenkins:
-api_id = os.getenv("VeraID")
-api_secret = os.getenv("VeraPW")
+api_id = os.getenv("API_ID")
+api_secret = os.getenv("API_KEY")
 dynamic_job = os.getenv("JOB_NAME")
 
 
