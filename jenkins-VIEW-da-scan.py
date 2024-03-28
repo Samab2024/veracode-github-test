@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-#import os
+import os
 import time                                                                     
 import hmac                                                                     
 import codecs
