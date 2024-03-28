@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
-import os
-import time                                                                     
-import hmac                                                                     
-import codecs
-import json  
-import sys                                                              
-from hashlib import sha256 
-import requests
-from requests.adapters import HTTPAdapter                                       
-from urllib.parse import urlparse
+#import os
+#import time                                                                     
+#import hmac                                                                     
+#import codecs
+#import json  
+#import sys                                                              
+#from hashlib import sha256 
+#import requests
+#from requests.adapters import HTTPAdapter                                       
+#from urllib.parse import urlparse
 
 #Setup variables according to environment
 
