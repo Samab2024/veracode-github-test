@@ -87,10 +87,10 @@ try:
     res = prepared_request('GET', 'https://api.veracode.com/was/configservice/v1/analyses' + '?name=' + dynamic_job)
     response1 = res.json()
     if response == '':
-        print("Could not find Dynamic Analysis")
+        print("1. Could not find Dynamic Analysis")
     job_id = response1['_embedded']['analyses'][0]['analysis_id']
 except: 
-    print("Could not find Dynamic Analysis")
+    print("2. Could not find Dynamic Analysis")
     sys.exit(1)
 
 #Update Schedule of existing DA Job
