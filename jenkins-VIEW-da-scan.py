@@ -84,9 +84,9 @@ data =   {
 print("Looking for Dynamic Analysis Job: " + dynamic_job )
 #Retrieve DA Job ID by project name
 try:
-    res1 = prepared_request('GET', 'https://api.veracode.com/was/configservice/v1/analyses' + '?name=' + dynamic_job)
-    response1 = res1.json()
-    if response1 == '':
+    res = prepared_request('GET', 'https://api.veracode.com/was/configservice/v1/analyses' + '?name=' + dynamic_job)
+    response1 = res.json()
+    if response == '':
         print("Could not find Dynamic Analysis")
     job_id = response1['_embedded']['analyses'][0]['analysis_id']
 except: 
@@ -107,10 +107,10 @@ except:
 
 print("Looking for Application List ")
 #Retrieve App List by project name
+res = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications')
+response = res.json()
 try:
-    res1 = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications')
-    response1 = res1.json()
-    if response1 == '':
+    if response == '':
         print("Could not find Applications List")
     job_id = response1['_embedded']['analyses'][0]['analysis_id']
 except: 
