@@ -17,7 +17,7 @@ api_id = os.getenv("API_ID")
 api_secret = os.getenv("API_KEY")
 #dynamic_job = os.getenv("JOB_NAME")
 dynamic_job = 'TEST_NEW'
-app_name = 'test_api_wrapper_new'
+app_name = 'Test Update 15 Nov'
 
 def veracode_hmac(host, url, method):
     signing_data = 'id={api_id}&host={host}&url={url}&method={method}'.format(
@@ -82,17 +82,17 @@ data =   {
 #    print("Could not find Dynamic Analysis")
 #    sys.exit(1)
 
-print("Looking for Dynamic Analysis Job: " + dynamic_job )
+#print("Looking for Dynamic Analysis Job: " + dynamic_job )
 #Retrieve DA Job ID by project name
-res = prepared_request('GET', 'https://api.veracode.com/was/configservice/v1/analyses' + '?name=' + dynamic_job)
+#res = prepared_request('GET', 'https://api.veracode.com/was/configservice/v1/analyses' + '?name=' + dynamic_job)
 #print(res.json())
-response = res.json()
-try:
-    job_id = response['_embedded']['analyses'][0]['analysis_id']
-    print('Job ID for Dynamic Analysis ' + dynamic_job + ' is ' + job_id + '.')
-except: 
-    print("Could not find Dynamic Analysis")
-    sys.exit(1)
+#response = res.json()
+#try:
+#    job_id = response['_embedded']['analyses'][0]['analysis_id']
+#    print('Job ID for Dynamic Analysis ' + dynamic_job + ' is ' + job_id + '.')
+#except: 
+#    print("Could not find Dynamic Analysis")
+#    sys.exit(1)
 
 #Update Schedule of existing DA Job
 #try:
@@ -122,6 +122,6 @@ except:
 
 print("Looking for Dynamic Findings: ")
 #Retrieve App List by project name
-res = prepared_request('GET', 'https://api.veracode.com/appsec/v2/applications/3920ce76-7e90-4bfc-8be6-831ece34b760/findings?scan_type=DYNAMIC&size=10')
+res = prepared_request('GET', 'https://api.veracode.com/appsec/v2/applications/' + app_guid + '/findings?scan_type=DYNAMIC&size=10')
 response = res.json()
 print(res.json())
