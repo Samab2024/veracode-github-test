@@ -111,7 +111,7 @@ try:
     res1 = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications')
     response1 = res1.json()
     if response1 == '':
-        print("Could not find Applications")
+        print("Could not find Applications List")
     job_id = response1['_embedded']['analyses'][0]['analysis_id']
 except: 
     print("Could not find Applications")
