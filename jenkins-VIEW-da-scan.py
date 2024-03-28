@@ -85,7 +85,7 @@ data =   {
 print("Looking for Dynamic Analysis Job: " + dynamic_job )
 #Retrieve DA Job ID by project name
 res = prepared_request('GET', 'https://api.veracode.com/was/configservice/v1/analyses' + '?name=' + dynamic_job)
-print(res.json())
+#print(res.json())
 response = res.json()
 try:
     job_id = response['_embedded']['analyses'][0]['analysis_id']
@@ -110,6 +110,7 @@ print("Looking for Application: " + app_name )
 #Retrieve App List by project name
 res = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications' + '?name=' + app_name)
 response = res.json()
+print(res.json())
 try:
     app_id = response['_embedded']['applications'][0]['id']
     app_guid = response['_embedded']['applications'][0]['guid']
