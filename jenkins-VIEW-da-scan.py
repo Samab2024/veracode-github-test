@@ -119,3 +119,9 @@ try:
 except: 
     print("Could not find Application")
     sys.exit(1)
+
+print("Looking for Dynamic Findings: ")
+#Retrieve App List by project name
+res = prepared_request('GET', 'https://api.veracode.com/appsec/v2/applications/3920ce76-7e90-4bfc-8be6-831ece34b760/findings?scan_type=DYNAMIC&size=10')
+response = res.json()
+print(res.json())
