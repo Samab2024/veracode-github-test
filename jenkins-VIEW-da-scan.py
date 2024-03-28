@@ -104,3 +104,15 @@ except:
 #except:
 #    print("Error executing API Call")
 #    sys.exit(1)
+
+print("Looking for Application List ")
+#Retrieve App List by project name
+try:
+    res1 = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications/')
+    response1 = res1.json()
+    if response1 == '':
+        print("Could not find Dynamic Analysis")
+    job_id = response1['_embedded']['analyses'][0]['analysis_id']
+except: 
+    print("Could not find Dynamic Analysis")
+    sys.exit(1)
