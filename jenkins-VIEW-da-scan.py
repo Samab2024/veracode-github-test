@@ -113,7 +113,7 @@ response = res.json()
 print(res.json())
 try:
     app_id = response['_embedded']['applications'][0]['id']
-    app_guid = response['_embedded']['applications'][0]['guid']
+#    app_guid = response['_embedded']['applications'][0]['guid']
 #    app_name = response['_embedded']['applications'][0]['profile']['name']
     print('App ID for ' + app_name + ' is ' + app_id + '.' 'Application GUID is ' + app_guid + '.')
 except: 
