@@ -110,18 +110,12 @@ print("Looking for Application: " + app_name )
 #Retrieve App List by project name
 res = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications' + '?name=' + app_name)
 response = res.json()
-print(res.json())
-app_id = response['_embedded']['applications'][0]['id']
-app_guid = response['_embedded']['applications'][0]['guid']
-app_name = response['_embedded']['applications'][0]['profile']['name']
-print(app_id)
-print(app_guid)
-print(app_name)
+#print(res.json())
 #try:
-#    app_id = response['_embedded']['applications'][0]['id']
-#    app_guid = response['_embedded']['applications'][0]['guid']
-#    app_name = response['_embedded']['applications'][0]['profile']['name']
-#    print('App ID for ' + app_name + ' is ' + app_id + '.' 'Application GUID is ' + app_guid + '.')
-#except: 
-#    print("Could not find Application")
-#    sys.exit(1)
+    app_id = response['_embedded']['applications'][0]['id']
+    app_guid = response['_embedded']['applications'][0]['guid']
+    app_name = response['_embedded']['applications'][0]['profile']['name']
+    print('Application GUID for ' + app_name + ' is ' + app_guid + '.')
+except: 
+    print("Could not find Application")
+    sys.exit(1)
