@@ -111,9 +111,9 @@ print("Looking for Application: " + app_name )
 res = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications' + '?name=' + app_name)
 response = res.json()
 print(res.json())
-    app_id = response['_embedded']['applications'][0]['id']
-    app_guid = response['_embedded']['applications'][0]['guid']
-    app_name = response['_embedded']['applications'][0]['profile']['name']
+app_id = response['_embedded']['applications'][0]['id']
+app_guid = response['_embedded']['applications'][0]['guid']
+app_name = response['_embedded']['applications'][0]['profile']['name']
 print('Output: ' + app_id + ' ' + app_guid + ' ' + app_name)
 #try:
 #    app_id = response['_embedded']['applications'][0]['id']
