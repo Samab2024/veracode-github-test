@@ -114,7 +114,9 @@ print(res.json())
 app_id = response['_embedded']['applications'][0]['id']
 app_guid = response['_embedded']['applications'][0]['guid']
 app_name = response['_embedded']['applications'][0]['profile']['name']
-print('Output: ' + app_id + ' ' + app_guid + ' ' + app_name)
+print(app_id)
+print(app_guid)
+print(app_name)
 #try:
 #    app_id = response['_embedded']['applications'][0]['id']
 #    app_guid = response['_embedded']['applications'][0]['guid']
