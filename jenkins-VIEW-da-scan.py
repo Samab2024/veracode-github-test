@@ -81,15 +81,15 @@ except:
     print("Could not find Dynamic Analysis")
     sys.exit(1)
 
-print("Looking for Dynamic Analysis Job: " + dynamic_job )
+#print("Looking for Dynamic Analysis Job: " + dynamic_job )
 #Retrieve DA Job ID by project name
-res = prepared_request('GET', 'https://api.veracode.com/was/configservice/v1/analyses', query=("name=" + dynamic_job))
-response = res.json()
-try:
-    job_id = response['_embedded']['analyses'][0]['analysis_id']
-except: 
-    print("Could not find Dynamic Analysis")
-    sys.exit(1)
+#res = prepared_request('GET', ('https://api.veracode.com/was/configservice/v1/analyses?name=' + dynamic_job))
+#response = res.json()
+#try:
+#    job_id = response['_embedded']['analyses'][0]['analysis_id']
+#except: 
+#    print("Could not find Dynamic Analysis")
+#    sys.exit(1)
 
 #Update Schedule of existing DA Job
 #try:
