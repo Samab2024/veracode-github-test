@@ -87,9 +87,7 @@ res = prepared_request('GET', 'https://api.veracode.com/was/configservice/v1/ana
 print(res.json())
 response = res.json()
 try:
-    if response == '':
-        print("1. Could not find Dynamic Analysis")
-    job_id = response1['_embedded']['analyses'][0]['analysis_id']
+    job_id = response['_embedded']['analyses'][0]['analysis_id']
 except: 
     print("2. Could not find Dynamic Analysis")
     sys.exit(1)
@@ -111,9 +109,7 @@ print("Looking for Application List ")
 res = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications')
 response = res.json()
 try:
-    if response == '':
-        print("Could not find Applications List")
-    job_id = response1['_embedded']['analyses'][0]['analysis_id']
+    print(response)
 except: 
     print("Could not find Applications")
     sys.exit(1)
