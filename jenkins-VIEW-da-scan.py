@@ -71,15 +71,15 @@ data =   {
 }
 
 
-print("Looking for Dynamic Analysis Jobs")
+#print("Looking for Dynamic Analysis Jobs")
 #Retrieve all DA Job
-res = prepared_request('GET', 'https://api.veracode.com/was/configservice/v1/analyses')
-response = res.json()
-try:
-    print(response)
-except: 
-    print("Could not find Dynamic Analysis")
-    sys.exit(1)
+#res = prepared_request('GET', 'https://api.veracode.com/was/configservice/v1/analyses')
+#response = res.json()
+#try:
+#    print(response)
+#except: 
+#    print("Could not find Dynamic Analysis")
+#    sys.exit(1)
 
 print("Looking for Dynamic Analysis Job: " + dynamic_job )
 #Retrieve DA Job ID by project name
