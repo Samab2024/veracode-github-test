@@ -83,9 +83,10 @@ data =   {
 
 print("Looking for Dynamic Analysis Job: " + dynamic_job )
 #Retrieve DA Job ID by project name
+res = prepared_request('GET', 'https://api.veracode.com/was/configservice/v1/analyses' + '?name=' + dynamic_job)
+print(res.json())
+response1 = res.json()
 try:
-    res = prepared_request('GET', 'https://api.veracode.com/was/configservice/v1/analyses' + '?name=' + dynamic_job)
-    response1 = res.json()
     if response == '':
         print("1. Could not find Dynamic Analysis")
     job_id = response1['_embedded']['analyses'][0]['analysis_id']
