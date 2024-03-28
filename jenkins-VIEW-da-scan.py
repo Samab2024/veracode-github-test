@@ -108,11 +108,11 @@ except:
 print("Looking for Application List ")
 #Retrieve App List by project name
 try:
-    res1 = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications/')
+    res1 = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications')
     response1 = res1.json()
     if response1 == '':
-        print("Could not find Dynamic Analysis")
+        print("Could not find Applications")
     job_id = response1['_embedded']['analyses'][0]['analysis_id']
 except: 
-    print("Could not find Dynamic Analysis")
+    print("Could not find Applications")
     sys.exit(1)
