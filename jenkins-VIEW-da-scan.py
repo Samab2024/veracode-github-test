@@ -88,6 +88,7 @@ print(res.json())
 response = res.json()
 try:
     job_id = response['_embedded']['analyses'][0]['analysis_id']
+    print(job_id)
 except: 
     print("2. Could not find Dynamic Analysis")
     sys.exit(1)
@@ -106,7 +107,7 @@ except:
 
 print("Looking for Application List ")
 #Retrieve App List by project name
-res = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications')
+res = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications' + '?name=test_api_wrapper_new)
 response = res.json()
 try:
     print(response)
