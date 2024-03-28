@@ -17,6 +17,7 @@ api_id = os.getenv("API_ID")
 api_secret = os.getenv("API_KEY")
 #dynamic_job = os.getenv("JOB_NAME")
 dynamic_job = 'TEST_NEW'
+app_name = 'test_api_wrapper_new'
 
 def veracode_hmac(host, url, method):
     signing_data = 'id={api_id}&host={host}&url={url}&method={method}'.format(
@@ -107,7 +108,7 @@ except:
 
 print("Looking for Application List ")
 #Retrieve App List by project name
-res = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications' + '?name=test_api_wrapper_new)
+res = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications' + '?name=' + app_name)
 response = res.json()
 try:
     print(response)
