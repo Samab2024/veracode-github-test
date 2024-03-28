@@ -14,11 +14,9 @@ from urllib.parse import urlparse
 
 #Jenkins:
 api_id = os.getenv("API_ID")
-#api_id = '7ba41c040f6c9f8dcacdb4d7a18da383'
 api_secret = os.getenv("API_KEY")
-#api_secret = 'bc354827aca7743ff31199736b0cf0aed2f6832f4b0758fc8db617a885dceeaf0d8b3897557e2a37213677b515ee497dc38dc689f6329a49e5c0b88e83df0728'
 #dynamic_job = os.getenv("JOB_NAME")
-
+dynamic_job = 'Findings DAST'
 
 def veracode_hmac(host, url, method):
     signing_data = 'id={api_id}&host={host}&url={url}&method={method}'.format(
@@ -74,11 +72,21 @@ data =   {
 
 
 print("Looking for Dynamic Analysis Jobs")
-#Retrieve DA Job ID by project name
+#Retrieve all DA Job
 res = prepared_request('GET', 'https://api.veracode.com/was/configservice/v1/analyses')
 response = res.json()
 try:
     print(response)
+except: 
+    print("Could not find Dynamic Analysis")
+    sys.exit(1)
+
+print("Looking for Dynamic Analysis Job: " + dynamic_job )
+#Retrieve DA Job ID by project name
+res = prepared_request('GET', 'https://api.veracode.com/was/configservice/v1/analyses', query=("name=" + dynamic_job))
+response = res.json()
+try:
+    job_id = response['_embedded']['analyses'][0]['analysis_id']
 except: 
     print("Could not find Dynamic Analysis")
     sys.exit(1)
