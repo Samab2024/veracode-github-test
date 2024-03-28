@@ -89,9 +89,9 @@ print(res.json())
 response = res.json()
 try:
     job_id = response['_embedded']['analyses'][0]['analysis_id']
-    print(job_id)
+    print('Dynamic Analysis ID: ' + job_id)
 except: 
-    print("2. Could not find Dynamic Analysis")
+    print("Could not find Dynamic Analysis")
     sys.exit(1)
 
 #Update Schedule of existing DA Job
@@ -106,12 +106,15 @@ except:
 #    print("Error executing API Call")
 #    sys.exit(1)
 
-print("Looking for Application List ")
+print("Looking for Application: " + app_name )
 #Retrieve App List by project name
 res = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications' + '?name=' + app_name)
 response = res.json()
 try:
-    print(response)
+    app_id = response['_embedded']['applications'][0]['id']
+    app_guid = response['_embedded']['applications'][0]['guid']
+    app_name = response['_embedded']['applications']['profile']['name']
+    print('App ID for ' + app_name + ' is ' + app_id + '.' 'Application GUID is ' + app_guid + '.')
 except: 
-    print("Could not find Applications")
+    print("Could not find Application")
     sys.exit(1)
