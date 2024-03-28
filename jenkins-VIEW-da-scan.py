@@ -89,7 +89,7 @@ res = prepared_request('GET', 'https://api.veracode.com/was/configservice/v1/ana
 response = res.json()
 try:
     job_id = response['_embedded']['analyses'][0]['analysis_id']
-    print('Dynamic Analysis ID: ' + job_id)
+    print('Job ID for Dynamic Analysis ' + dynamic_job + ' is ' + job_id + '.')
 except: 
     print("Could not find Dynamic Analysis")
     sys.exit(1)
