@@ -82,7 +82,7 @@ data =   {
 #    print("Could not find Dynamic Analysis")
 #    sys.exit(1)
 
-dynamic_job = 'TEST_NEW'
+dynamic_job = 'ISM Testing'
 
 print("Looking for Dynamic Analysis Job: " + dynamic_job )
 #Retrieve DA Job ID by project name
@@ -115,10 +115,8 @@ while cnt < 61:
     res = prepared_request('GET', 'https://api.veracode.com/was/configservice/v1/analyses' + '?name=' + dynamic_job)
     #print(res.json())
     response = res.json()
-    status = response['_embedded']['analyses'][0]['latest_occurrence_status']['status_type']
-    print('Status for Dynamic Analysis ' + dynamic_job + ' is ' + status + '.')
     try:
-        status = response['_embedded']['latest_occurrence_status'][0]['status_type']
+        status = response['_embedded']['analyses'][0]['latest_occurrence_status']['status_type']
         print('Status for Dynamic Analysis ' + dynamic_job + ' is ' + status + '.')
         print('Checking Status after 120 seconds,')
         sleep(120)
