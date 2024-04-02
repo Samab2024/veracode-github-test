@@ -96,7 +96,7 @@ except:
     print("Could not find Dynamic Analysis")
     sys.exit(1)
 
-Update Schedule of existing DA Job
+#Update Schedule of existing DA Job
 try:
     res = prepared_request('PUT', 'https://api.veracode.com/was/configservice/v1/analyses/' + job_id + '?method=PATCH', json=data)
     if res.status_code == 204:
