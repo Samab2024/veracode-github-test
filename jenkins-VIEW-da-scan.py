@@ -82,46 +82,48 @@ data =   {
 #    print("Could not find Dynamic Analysis")
 #    sys.exit(1)
 
-#print("Looking for Dynamic Analysis Job: " + dynamic_job )
+dynamic_job = 'TEST_NEW'
+
+print("Looking for Dynamic Analysis Job: " + dynamic_job )
 #Retrieve DA Job ID by project name
-#res = prepared_request('GET', 'https://api.veracode.com/was/configservice/v1/analyses' + '?name=' + dynamic_job)
+res = prepared_request('GET', 'https://api.veracode.com/was/configservice/v1/analyses' + '?name=' + dynamic_job)
 #print(res.json())
-#response = res.json()
-#try:
-#    job_id = response['_embedded']['analyses'][0]['analysis_id']
-#    print('Job ID for Dynamic Analysis ' + dynamic_job + ' is ' + job_id + '.')
-#except: 
-#    print("Could not find Dynamic Analysis")
-#    sys.exit(1)
-
-#Update Schedule of existing DA Job
-#try:
-#    res = prepared_request('PUT', 'https://api.veracode.com/was/configservice/v1/analyses/' + job_id + '?method=PATCH', json=data)
-#    if res.status_code == 204:
-#        print("Scan Submitted Successfully: " + str(res.status_code) )
-#    else:
-#        response = res.json()
-#        print("Error encountered: " + response['_embedded']['errors'][0]['detail'])
-#except:
-#    print("Error executing API Call")
-#    sys.exit(1)
-
-print("Looking for Application: " + app_name )
-#Retrieve App List by project name
-res = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications' + '?name=' + app_name)
 response = res.json()
-#print(res.json())
 try:
-    app_id = response['_embedded']['applications'][0]['id']
-    app_guid = response['_embedded']['applications'][0]['guid']
-    app_name = response['_embedded']['applications'][0]['profile']['name']
-    print('Application GUID for ' + app_name + ' is ' + app_guid + '.')
+    job_id = response['_embedded']['analyses'][0]['analysis_id']
+    print('Job ID for Dynamic Analysis ' + dynamic_job + ' is ' + job_id + '.')
 except: 
-    print("Could not find Application")
+    print("Could not find Dynamic Analysis")
     sys.exit(1)
 
-print("Looking for Dynamic Findings: ")
+Update Schedule of existing DA Job
+try:
+    res = prepared_request('PUT', 'https://api.veracode.com/was/configservice/v1/analyses/' + job_id + '?method=PATCH', json=data)
+    if res.status_code == 204:
+        print("Scan Submitted Successfully: " + str(res.status_code) )
+    else:
+        response = res.json()
+        print("Error encountered: " + response['_embedded']['errors'][0]['detail'])
+except:
+    print("Error executing API Call")
+    sys.exit(1)
+
+#print("Looking for Application: " + app_name )
 #Retrieve App List by project name
-res = prepared_request('GET', 'https://api.veracode.com/appsec/v2/applications/' + app_guid + '/findings?scan_type=DYNAMIC&size=10')
-response = res.json()
-print(res.json())
+#res = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications' + '?name=' + app_name)
+#response = res.json()
+#print(res.json())
+#try:
+#    app_id = response['_embedded']['applications'][0]['id']
+#    app_guid = response['_embedded']['applications'][0]['guid']
+#    app_name = response['_embedded']['applications'][0]['profile']['name']
+#    print('Application GUID for ' + app_name + ' is ' + app_guid + '.')
+#except: 
+#    print("Could not find Application")
+#    sys.exit(1)
+
+#print("Looking for Dynamic Findings: ")
+#Retrieve App List by project name
+#res = prepared_request('GET', 'https://api.veracode.com/appsec/v2/applications/' + app_guid + '/findings?scan_type=DYNAMIC&size=10')
+#response = res.json()
+#print(res.json())
