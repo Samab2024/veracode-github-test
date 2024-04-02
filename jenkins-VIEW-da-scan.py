@@ -115,7 +115,7 @@ while cnt < 61:
     res = prepared_request('GET', 'https://api.veracode.com/was/configservice/v1/analyses' + '?name=' + dynamic_job)
     #print(res.json())
     response = res.json()
-    status = response['_embedded']['latest_occurrence_status'][0]['status_type']
+    status = response['_embedded']['analyses']['latest_occurrence_status']['status_type']
     print('Status for Dynamic Analysis ' + dynamic_job + ' is ' + status + '.')
     try:
         status = response['_embedded']['latest_occurrence_status'][0]['status_type']
