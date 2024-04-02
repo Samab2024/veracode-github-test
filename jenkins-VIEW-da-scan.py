@@ -111,15 +111,15 @@ except:
 cnt = 0
 print("Looking for Dynamic Analysis Job Status: ")
 #Retrieve DA Job ID by project name
-while cnt < 61:
+while cnt < 360:
     res = prepared_request('GET', 'https://api.veracode.com/was/configservice/v1/analyses' + '?name=' + dynamic_job)
-    print(res.json())
+    #print(res.json())
     response = res.json()
     try:
         status = response['_embedded']['analyses'][0]['latest_occurrence_status']['status_type']
         print('Status for Dynamic Analysis ' + dynamic_job + ' is ' + status + '.')
-        print('Checking Status after 10 seconds,')
-        time.sleep(10)
+        print('\nChecking Status after 10 seconds.\n')
+        time.sleep(1)
         cnt += 1
     except: 
         print("Could not find Dynamic Analysis")
