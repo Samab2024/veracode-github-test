@@ -116,7 +116,7 @@ while cnt < 61:
     #print(res.json())
     response = res.json()
     try:
-        status = response['_embedded']['analyses'][0]['status_type']
+        status = response['_embedded']['latest_occurrence_status'][0]['status_type']
         print('Status for Dynamic Analysis ' + dynamic_job + ' is ' + status + '.')
         print('Checking Status after 120 seconds,')
         sleep(120)
