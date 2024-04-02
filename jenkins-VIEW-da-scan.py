@@ -16,7 +16,7 @@ from urllib.parse import urlparse
 api_id = os.getenv("API_ID")
 api_secret = os.getenv("API_KEY")
 #dynamic_job = os.getenv("JOB_NAME")
-dynamic_job = 'TEST_NEW'
+#dynamic_job = 'TEST_NEW'
 app_name = 'Test Update 15 Nov'
 
 def veracode_hmac(host, url, method):
@@ -82,7 +82,7 @@ data =   {
 #    print("Could not find Dynamic Analysis")
 #    sys.exit(1)
 
-dynamic_job = 'ISM Testing'
+dynamic_job = 'Test_Dynamic_210823'
 
 print("Looking for Dynamic Analysis Job: " + dynamic_job )
 #Retrieve DA Job ID by project name
