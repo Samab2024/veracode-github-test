@@ -109,7 +109,7 @@ except:
     sys.exit(1)
 
 cnt = 0
-while cnt < 61
+while cnt < 61:
     print("Looking for Dynamic Analysis Job Status: ")
     #Retrieve DA Job ID by project name
     res = prepared_request('GET', 'https://api.veracode.com/was/configservice/v1/analyses' + '?name=' + dynamic_job)
