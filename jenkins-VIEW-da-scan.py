@@ -108,6 +108,23 @@ except:
     print("Error executing API Call")
     sys.exit(1)
 
+cnt = 0
+while (cnt < 121)
+    print("Looking for Dynamic Analysis Job Status: ")
+    #Retrieve DA Job ID by project name
+    res = prepared_request('GET', 'https://api.veracode.com/was/configservice/v1/analyses' + '?name=' + dynamic_job)
+    #print(res.json())
+    response = res.json()
+    try:
+        status = response['_embedded']['analyses'][0]['status_type']
+        print('Status for Dynamic Analysis ' + dynamic_job + ' is ' + status + '.')
+        print('Checking Status after 120 seconds,')
+        sleep(120)
+        cnt += 1
+    except: 
+        print("Could not find Dynamic Analysis")
+        sys.exit(1)
+    
 #print("Looking for Application: " + app_name )
 #Retrieve App List by project name
 #res = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications' + '?name=' + app_name)
