@@ -118,8 +118,8 @@ while cnt < 61:
     try:
         status = response['_embedded']['analyses'][0]['latest_occurrence_status']['status_type']
         print('Status for Dynamic Analysis ' + dynamic_job + ' is ' + status + '.')
-        print('Checking Status after 120 seconds,')
-        time.sleep(60)
+        print('Checking Status after 10 seconds,')
+        time.sleep(10)
         cnt += 1
     except: 
         print("Could not find Dynamic Analysis")
