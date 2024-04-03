@@ -73,7 +73,8 @@ try:
     status = response['_embedded']['analyses'][0]['latest_occurrence_status']['status_type']
     if status == 'FINISHED_RESULTS_AVAILABLE':
         print('\nStatus for Dynamic Analysis ' + dynamic_job + ' is ' + status + '.')
-        done += 1
+        #done += 1
+        os.getenv("STATUS") = status
         break
     else:
         print('\nStatus for Dynamic Analysis ' + dynamic_job + ' is ' + status + '.')
