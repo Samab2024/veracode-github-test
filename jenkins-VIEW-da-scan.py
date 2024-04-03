@@ -65,7 +65,7 @@ data =   {
             "now": True,
             "duration": 
                 {
-                "length": 1,
+                "length": 3,
                 "unit": "DAY"
                 }
         }
