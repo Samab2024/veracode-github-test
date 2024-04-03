@@ -106,7 +106,7 @@ except:
     sys.exit(1)
 
 print('\nWaiting for 30 seconds to update the status.')
-time.sleep(30)
+#time.sleep(30)
 
 #cnt = 1
 #done = 0
