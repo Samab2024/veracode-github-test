@@ -15,8 +15,8 @@ from urllib.parse import urlparse
 #Jenkins:
 api_id = os.getenv("API_ID")
 api_secret = os.getenv("API_KEY")
-#dynamic_job = os.getenv("JOB_NAME")
-dynamic_job = 'Findings DAST'
+dynamic_job = os.getenv("JOB_NAME")
+#dynamic_job = 'Findings DAST'
 #app_name = 'Test Update 15 Nov'
 
 def veracode_hmac(host, url, method):
