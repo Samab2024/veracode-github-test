@@ -58,7 +58,7 @@ def prepared_request(method, end_point, json=None, query=None, file=None):
 
 # code above this line is reusable for all/most API calls
 
-#time.sleep(30)
+time.sleep(30)
 #print('\nWaiting for 30 seconds to update the status.')
 
 #cnt = 1
