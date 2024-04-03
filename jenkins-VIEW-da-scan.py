@@ -16,7 +16,7 @@ from urllib.parse import urlparse
 api_id = os.getenv("API_ID")
 api_secret = os.getenv("API_KEY")
 #dynamic_job = os.getenv("JOB_NAME")
-dynamic_job = 'TEST_NEW'
+dynamic_job = 'Test_Dynamic_210823'
 #app_name = 'Test Update 15 Nov'
 
 def veracode_hmac(host, url, method):
@@ -88,35 +88,39 @@ res = prepared_request('GET', 'https://api.veracode.com/was/configservice/v1/ana
 response = res.json()
 try:
     job_id = response['_embedded']['analyses'][0]['analysis_id']
-    print('Job ID for Dynamic Analysis ' + dynamic_job + ' is ' + job_id + '.')
+    print('\nJob ID for Dynamic Analysis ' + dynamic_job + ' is ' + job_id + '.')
 except: 
-    print("Could not find Dynamic Analysis")
+    print("\nCould not find Dynamic Analysis")
     sys.exit(1)
 
 #Update Schedule of existing DA Job
 try:
     res = prepared_request('PUT', 'https://api.veracode.com/was/configservice/v1/analyses/' + job_id + '?method=PATCH', json=data)
     if res.status_code == 204:
-        print("Scan Submitted Successfully: " + str(res.status_code) )
+        print("\nScan Submitted Successfully: " + str(res.status_code) )
     else:
         response = res.json()
-        print("Error encountered: " + response['_embedded']['errors'][0]['detail'])
+        print("\nError encountered: " + response['_embedded']['errors'][0]['detail'])
 except:
     print("Error executing API Call")
     sys.exit(1)
 
-#cnt = 0
+cnt = 0
 print("Looking for Dynamic Analysis Job Status: ")
 #Retrieve DA Status by Analysis name
-res = prepared_request('GET', 'https://api.veracode.com/was/configservice/v1/analyses' + '?name=' + dynamic_job)
-#print(res.json())
-response = res.json()
-try:
-    status = response['_embedded']['analyses'][0]['latest_occurrence_status']['status_type']
-    print('Status for Dynamic Analysis ' + dynamic_job + ' is ' + status + '.')
-except: 
-    print("Could not find Dynamic Analysis")
-    sys.exit(1)
+for cnt in range(60):
+    res = prepared_request('GET', 'https://api.veracode.com/was/configservice/v1/analyses' + '?name=' + dynamic_job)
+    #print(res.json())
+    response = res.json()
+    try:
+        status = response['_embedded']['analyses'][0]['latest_occurrence_status']['status_type']
+        print('\nStatus for Dynamic Analysis ' + dynamic_job + ' is ' + status + '.')
+        print('\nChecking Status after 10 seconds\n.')
+        cnt += 1
+    except: 
+        print("\nCould not find Dynamic Analysis")
+        sys.exit(1)
+    time.sleep(10)
     
 #print("Looking for Application: " + app_name )
 #Retrieve App List by project name
