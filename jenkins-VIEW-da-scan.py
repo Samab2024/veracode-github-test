@@ -81,7 +81,7 @@ data =   {
 #    print("Could not find Dynamic Analysis")
 #    sys.exit(1)
 
-print("Looking for Dynamic Analysis Job: " + dynamic_job )
+print("\nLooking for Dynamic Analysis Job: " + dynamic_job )
 #Retrieve DA Job ID by project name
 res = prepared_request('GET', 'https://api.veracode.com/was/configservice/v1/analyses' + '?name=' + dynamic_job)
 #print(res.json())
@@ -105,8 +105,11 @@ except:
     print("Error executing API Call")
     sys.exit(1)
 
+time.sleep(30)
+print('\nWaiting for 30 seconds to update the status.')
+
 cnt = 1
-print("Looking for Dynamic Analysis Job Status: ")
+print("\nLooking for Dynamic Analysis Job Status: ")
 #Retrieve DA Status by Analysis name
 while cnt > 0:
     res = prepared_request('GET', 'https://api.veracode.com/was/configservice/v1/analyses' + '?name=' + dynamic_job)
