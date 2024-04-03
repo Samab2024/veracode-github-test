@@ -75,7 +75,7 @@ try:
         print('\nStatus for Dynamic Analysis ' + dynamic_job + ' is ' + status + '.')
         #done += 1
         #return status
-        break
+        #break
     else:
         print('\nStatus for Dynamic Analysis ' + dynamic_job + ' is ' + status + '.')
         print('\nChecking Status after 30 seconds\n.')
