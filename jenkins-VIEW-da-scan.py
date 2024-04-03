@@ -16,8 +16,8 @@ from urllib.parse import urlparse
 api_id = os.getenv("API_ID")
 api_secret = os.getenv("API_KEY")
 #dynamic_job = os.getenv("JOB_NAME")
-#dynamic_job = 'TEST_NEW'
-app_name = 'Test Update 15 Nov'
+dynamic_job = 'TEST_NEW'
+#app_name = 'Test Update 15 Nov'
 
 def veracode_hmac(host, url, method):
     signing_data = 'id={api_id}&host={host}&url={url}&method={method}'.format(
@@ -71,7 +71,6 @@ data =   {
         }
 }
 
-
 #print("Looking for Dynamic Analysis Jobs")
 #Retrieve all DA Job
 #res = prepared_request('GET', 'https://api.veracode.com/was/configservice/v1/analyses')
@@ -81,8 +80,6 @@ data =   {
 #except: 
 #    print("Could not find Dynamic Analysis")
 #    sys.exit(1)
-
-dynamic_job = 'TEST_NEW'
 
 print("Looking for Dynamic Analysis Job: " + dynamic_job )
 #Retrieve DA Job ID by project name
@@ -108,22 +105,18 @@ except:
     print("Error executing API Call")
     sys.exit(1)
 
-cnt = 0
+#cnt = 0
 print("Looking for Dynamic Analysis Job Status: ")
-#Retrieve DA Job ID by project name
-while cnt < 360:
-    res = prepared_request('GET', 'https://api.veracode.com/was/configservice/v1/analyses' + '?name=' + dynamic_job)
-    #print(res.json())
-    response = res.json()
-    try:
-        status = response['_embedded']['analyses'][0]['latest_occurrence_status']['status_type']
-        print('Status for Dynamic Analysis ' + dynamic_job + ' is ' + status + '.')
-        print('\nChecking Status after 10 seconds.\n')
-        #time.sleep(10)
-        cnt += 1
-    except: 
-        print("Could not find Dynamic Analysis")
-        sys.exit(1)
+#Retrieve DA Status by Analysis name
+res = prepared_request('GET', 'https://api.veracode.com/was/configservice/v1/analyses' + '?name=' + dynamic_job)
+#print(res.json())
+response = res.json()
+try:
+    status = response['_embedded']['analyses'][0]['latest_occurrence_status']['status_type']
+    print('Status for Dynamic Analysis ' + dynamic_job + ' is ' + status + '.')
+except: 
+    print("Could not find Dynamic Analysis")
+    sys.exit(1)
     
 #print("Looking for Application: " + app_name )
 #Retrieve App List by project name
