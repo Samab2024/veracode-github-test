@@ -119,7 +119,7 @@ while cnt > 0:
         status = response['_embedded']['analyses'][0]['latest_occurrence_status']['status_type']
         if status == 'FINISHED_RESULTS_AVAILABLE':
             print('\nStatus for Dynamic Analysis ' + dynamic_job + ' is ' + status + '.')
-            exit()
+            quit()
         else:
             print('\nStatus for Dynamic Analysis ' + dynamic_job + ' is ' + status + '.')
             print('\nChecking Status after 30 seconds\n.')
