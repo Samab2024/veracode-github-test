@@ -119,12 +119,12 @@ while cnt > 0:
             exit()
         else:
             print('\nStatus for Dynamic Analysis ' + dynamic_job + ' is ' + status + '.')
-            print('\nChecking Status after 10 seconds\n.')
+            print('\nChecking Status after 30 seconds\n.')
             cnt += 1
     except: 
         print("\nCould not find Dynamic Analysis")
         sys.exit(1)
-    time.sleep(10)
+    time.sleep(30)
     
 #print("Looking for Application: " + app_name )
 #Retrieve App List by project name
