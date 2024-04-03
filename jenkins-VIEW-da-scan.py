@@ -16,7 +16,7 @@ from urllib.parse import urlparse
 api_id = os.getenv("API_ID")
 api_secret = os.getenv("API_KEY")
 #dynamic_job = os.getenv("JOB_NAME")
-dynamic_job = 'Test_Dynamic_210823'
+dynamic_job = 'Findings DAST'
 #app_name = 'Test Update 15 Nov'
 
 def veracode_hmac(host, url, method):
@@ -105,18 +105,22 @@ except:
     print("Error executing API Call")
     sys.exit(1)
 
-cnt = 0
+cnt = 1
 print("Looking for Dynamic Analysis Job Status: ")
 #Retrieve DA Status by Analysis name
-for cnt in range(60):
+while cnt > 0:
     res = prepared_request('GET', 'https://api.veracode.com/was/configservice/v1/analyses' + '?name=' + dynamic_job)
     #print(res.json())
     response = res.json()
     try:
         status = response['_embedded']['analyses'][0]['latest_occurrence_status']['status_type']
-        print('\nStatus for Dynamic Analysis ' + dynamic_job + ' is ' + status + '.')
-        print('\nChecking Status after 10 seconds\n.')
-        cnt += 1
+        if status == FINISHED_RESULTS_AVAILABLE:
+            print('\nStatus for Dynamic Analysis ' + dynamic_job + ' is ' + status + '.')
+            sys.exit(0)
+        else:
+            print('\nStatus for Dynamic Analysis ' + dynamic_job + ' is ' + status + '.')
+            print('\nChecking Status after 10 seconds\n.')
+            cnt += 1
     except: 
         print("\nCould not find Dynamic Analysis")
         sys.exit(1)
