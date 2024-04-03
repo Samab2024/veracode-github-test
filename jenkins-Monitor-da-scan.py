@@ -58,31 +58,8 @@ def prepared_request(method, end_point, json=None, query=None, file=None):
 
 # code above this line is reusable for all/most API calls
 
-#Payload for updating schedule of existing DA job to start now
-data =   { 
-    "schedule": 
-        {       
-            "now": True,
-            "duration": 
-                {
-                "length": 3,
-                "unit": "DAY"
-                }
-        }
-}
-
-#print("Looking for Dynamic Analysis Jobs")
-#Retrieve all DA Job
-#res = prepared_request('GET', 'https://api.veracode.com/was/configservice/v1/analyses')
-#response = res.json()
-#try:
-#    print(response)
-#except: 
-#    print("Could not find Dynamic Analysis")
-#    sys.exit(1)
-
-time.sleep(30)
-print('\nWaiting for 30 seconds to update the status.')
+#time.sleep(30)
+#print('\nWaiting for 30 seconds to update the status.')
 
 cnt = 1
 done = 0
