@@ -105,33 +105,33 @@ except:
     print("Error executing API Call")
     sys.exit(1)
 
-time.sleep(30)
 print('\nWaiting for 30 seconds to update the status.')
+time.sleep(30)
 
-cnt = 1
-done = 0
-print("\nLooking for Dynamic Analysis Job Status: ")
+#cnt = 1
+#done = 0
+#print("\nLooking for Dynamic Analysis Job Status: ")
 #Retrieve DA Status by Analysis name
-while cnt > 0:
-    res = prepared_request('GET', 'https://api.veracode.com/was/configservice/v1/analyses' + '?name=' + dynamic_job)
-    #print(res.json())
-    response = res.json()
-    try:
-        status = response['_embedded']['analyses'][0]['latest_occurrence_status']['status_type']
-        if status == 'FINISHED_RESULTS_AVAILABLE':
-            print('\nStatus for Dynamic Analysis ' + dynamic_job + ' is ' + status + '.')
-            done += 1
-            break
-        else:
-            print('\nStatus for Dynamic Analysis ' + dynamic_job + ' is ' + status + '.')
-            print('\nChecking Status after 30 seconds\n.')
-            cnt += 1
-    except: 
-        print("\nCould not find Dynamic Analysis")
-        sys.exit(1)
-    if done > 0:
-        break
-    time.sleep(30)
+#while cnt > 0:
+#    res = prepared_request('GET', 'https://api.veracode.com/was/configservice/v1/analyses' + '?name=' + dynamic_job)
+#    #print(res.json())
+#    response = res.json()
+#    try:
+#        status = response['_embedded']['analyses'][0]['latest_occurrence_status']['status_type']
+#        if status == 'FINISHED_RESULTS_AVAILABLE':
+#            print('\nStatus for Dynamic Analysis ' + dynamic_job + ' is ' + status + '.')
+#            done += 1
+#            break
+#        else:
+#            print('\nStatus for Dynamic Analysis ' + dynamic_job + ' is ' + status + '.')
+#            print('\nChecking Status after 30 seconds\n.')
+#            cnt += 1
+#    except: 
+#        print("\nCould not find Dynamic Analysis")
+#        sys.exit(1)
+#    if done > 0:
+#        break
+#    time.sleep(30)
     
 #print("Looking for Application: " + app_name )
 #Retrieve App List by project name
