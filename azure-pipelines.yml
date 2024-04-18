@@ -1,93 +1,21 @@
-# Maven
-# Build your Java project and run tests with Apache Maven.
-# Add steps that analyze code, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/java
-# This is an example of using VeraDemo Java test application with the Veracode Static Pipeline scanner.  A Veracode subscription is required.
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
 trigger:
 - main
+
 pool:
-  name: Default
-variables:
-   buildConfiguration: 'Debug'
+  name: default
 
 steps:
-- task: Maven@4
-  inputs:
-    mavenPomFile: 'app/pom.xml'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    javaHomeOption: 'JDKVersion'
-    mavenVersionOption: 'Default'
-    mavenAuthenticateFeed: false
-    effectivePomSkip: false
-    sonarQubeRunAnalysis: false
-
-# - task: Veracode@3
-#   inputs:
-#               ConnectionDetailsSelection: 'Service Connection'
-#               AnalysisService: 'Veracode API'
-#               veracodeAppProfile: 'New ADO'
-#               # version: 'New ADO-$(build.buildNumber)-test'
-#               filepath: 'app/target/verademo.war'
-#               optargs: '-deleteincompletescan 2'
-#               sandboxName: 'IF'
-#               createProfile: true
-#               createSandBox: true
-#               failBuildIfUploadAndScanBuildStepFails: true
-#               importResults: true
-#               maximumWaitTime: '360'
-
-# - task: Veracode@3
-#   inputs: 
-#     ConnectionDetailsSelection: 'Service Connection'
-#     AnalysisService: 'Veracode API'
-#     veracodeAppProfile: 'New ADO'
-#     version: '20240308.9'
-#     filepath: 'app/target/verademo.war'
-#     optargs: '-deleteincompletescan 2'
-#     importResults: true
-#     maximumWaitTime: '360'
-#     failBuildIfUploadAndScanBuildStepFails: false
-#     continueOnError: true 
-
-# - task: CmdLine@2
-#   inputs:
-#     script: |
-#       # here we get the link for the previous task logs
-#       previousTask=$(curl -s -X GET -H "Authorization: Bearer $(System.AccessToken)" -H "Content-Type: application/json" https://dev.azure.com/{organization}/{project}/_apis/build/builds/{build.buildNumber} | jq . )
-      
-#       #put the logs in a file or you can simply grep on them
-#       curl -s -X GET -H "Authorization: Bearer $(System.AccessToken)" -H "Content-Type: application/json" "${previousTask}" | sed 's/^.*[0-9]Z //g' > $(System.DefaultWorkingDirectory)/log
-      
-#       #grep on that file
-#       result=$(grep "already exists" $(System.DefaultWorkingDirectory)/log)
-#       echo $result
-#       if [ -z "$result" ]
-#       then
-#         echo "No expected error message!"
-#       else
-#         echo "##[warning]Build Already exist"
-#       fi
-
-- task: PowerShell@2
-  continueOnError: true
-  inputs:
-    targetType: 'inline'
-    script: |
-      # Write your PowerShell commands here.
-      java -jar VeracodeJavaAPI.jar -vid '5d25539b2665d9059bdffe4cd1e8b826' -vkey '720177737f79836b741a2b335b5a152197d985ea23ff7eb51f76657eabd441ea5596170b3eb2d8ca77bf7f4d6b595b6fa80007cbe72be1083c640725e19e96fd' -action uploadandscan -appname "New ADO" -filepath "app/target/verademo.war" -createprofile false -version "20240308.9" -autoscan true > trace.json 2>&1
-
 - task: Bash@3
-  displayName: 'Build Check'
-  inputs:
-          targetType: 'inline'
-          script: |
-            PASS=$(cat trace.json | grep 'already exists' )
-            #PASS='passed'
-            echo "$PASS"
-            if [ -z "$PASS" ]
-             then
-              echo "No expected error message!"
-            else
-              echo "##[warning]Build Already exist"
-            fi
+  displayName: Veracode CLI SCA & SBOM Generation
+  env:
+    VERACODE_API_KEY_ID: $(VERACODE_API_KEY_ID)
+    VERACODE_API_KEY_SECRET: $(VERACODE_API_KEY_SECRET)
+    targetType: inline
+    script: |
+      curl -fsS https://tools.veracode.com/veracode-cli/install | sh
+      ./veracode scan --source alpine:latest --type image --format table 
