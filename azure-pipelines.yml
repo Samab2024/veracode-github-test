@@ -12,10 +12,10 @@ pool:
 steps:
 - task: Bash@3
   displayName: Veracode CLI SCA & SBOM Generation
-  env:
-    VERACODE_API_KEY_ID: $(VERACODE_API_KEY_ID)
-    VERACODE_API_KEY_SECRET: $(VERACODE_API_KEY_SECRET)
-    targetType: inline
+  inputs:
+    targetType: 'inline'
     script: |
+      export VERACODE_API_KEY_ID = $(VERACODE_API_KEY_ID)
+      export VERACODE_API_KEY_SECRET = $(VERACODE_API_KEY_SECRET)
       curl -fsS https://tools.veracode.com/veracode-cli/install | sh
       ./veracode scan --source alpine:latest --type image --format table 
