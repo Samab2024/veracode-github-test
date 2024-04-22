@@ -80,7 +80,7 @@ for app_name in app_list:
     #Retrieve App ID by App name
     res = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications' + '?name=' + app_name)
     response = res.json()
-    #print(res.json())
+    print(res.json())
     try:
         app_guid = response['_embedded']['applications'][0]['guid']
     except: 
@@ -106,7 +106,7 @@ for app_name in app_list:
         print(res.json())
         try:
             if res.status_code == 204:
-                print("\nScan Submitted Successfully: " + str(res.status_code) )
+                print("\nSandbox Updated Successfully: " + str(res.status_code) )
             else:
                 response = res.json()
                 print("\nError encountered: " + response['_embedded']['errors'][0]['detail'])
