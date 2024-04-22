@@ -80,11 +80,11 @@ for app_name in app_list:
     #Retrieve App ID by App name
     res = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications' + '?name=' + app_name)
     response = res.json()
-    print(res.json())
+    #print(res.json())
     try:
         app_guid = response['_embedded']['applications'][0]['guid']
     except: 
-        print("Could not find Application")
+        print("\nCould not find Application")
         sys.exit(1)
         
     for sandbox_name in sandbox_list:
@@ -92,21 +92,21 @@ for app_name in app_list:
         print(sandbox_name)
         res = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications/' + app_guid + '/sandboxes')
         response = res.json()
-        print(res.json())
+        #print(res.json())
         try:
             sandboxes1 = response['_embedded']
             sandboxes2 = sandboxes1['sandboxes']
             sandbox_guid = sandboxes2[i]['guid']
-            print(sandboxes2)
+            print(sandbox_guid)
             i += 1
         except: 
-            print("Could not find Sandbox Details")
+            print("\nCould not find Sandbox Details")
             sys.exit(1)
 
         #Update Schedule of existing DA Job
         print(sandbox_guid)
-        #res = prepared_request('PUT', 'https://api.veracode.com/appsec/v1/applications/' + app_guid + '/sandboxes/' + sandbox_guid, json=data)
-        print(res.json())
+        res = prepared_request('PUT', 'https://api.veracode.com/appsec/v1/applications/' + app_guid + '/sandboxes/' + sandbox_guid, json=data)
+        #print(res.json())
         try:
             if res.status_code == 204:
                 print("\nSandbox Updated Successfully: " + str(res.status_code) )
@@ -114,5 +114,5 @@ for app_name in app_list:
                 response = res.json()
                 print("\nError encountered: " + response['_embedded']['errors'][0]['detail'])
         except:
-            print("Error executing API Call")
+            print("\nError executing API Call")
             sys.exit(1)
