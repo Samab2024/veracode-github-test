@@ -99,7 +99,7 @@ for app_name in app_list:
 
         #Update Schedule of existing DA Job
         try:
-            res = prepared_request('PUT', 'https://api.veracode.com/appsec/v1/applications/' + app_guid + '/sandboxes/' + sandbox_guid, json=data)
+            res = prepared_request('PUT', 'https://api.veracode.com/appsec/v1/applications/' + app_guid + '/sandboxes/' + sandbox_guid + '?method=PATCH', json=data)
             print(res.json())
             if res.status_code == 204:
                 print("\nScan Submitted Successfully: " + str(res.status_code) )
