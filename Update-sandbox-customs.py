@@ -94,8 +94,7 @@ for app_name in app_list:
         response = res.json()
         print(res.json())
         try:
-            sandbox = response['_embedded']
-            sandboxes = "\nData: " + response.values()
+            sandboxes = response['_embedded']
             print(sandboxes)
             sandbox_guid = sandboxes['_embedded']['sandboxes'][i]['guid']
             i += 1
