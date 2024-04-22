@@ -88,7 +88,7 @@ for app_name in app_list:
         
     for sandbox_name in sandbox_list:
         #Retrieve Sandbox ID by Sandbox name
-        res = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications/' + app_guid + '/sandboxes?name=' + )
+        res = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications/' + app_guid + '/sandboxes?name=' + sandbox_name)
         response = res.json()
         #print(res.json())
         try:
