@@ -97,7 +97,7 @@ for app_name in app_list:
             sandboxes1 = response['_embedded']
             sandboxes2 = sandboxes1['sandboxes']
             sandbox_guid = sandboxes2[i]['guid']
-            print(sandbox_guid)
+            print("Sandbox GUID: " + sandbox_guid)
             i += 1
         except: 
             print("\nCould not find Sandbox Details")
@@ -105,7 +105,7 @@ for app_name in app_list:
 
         #Update Schedule of existing DA Job
         res = prepared_request('PUT', 'https://api.veracode.com/appsec/v1/applications/' + app_guid + '/sandboxes/' + sandbox_guid, json=data)
-        print(res.status_code)
+        #print(res.status_code)
         try:
             if res.status_code == 200:
                 print("\nSandbox Updated Successfully: " + str(res.status_code) )
