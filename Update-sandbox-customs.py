@@ -90,7 +90,7 @@ for app_name in app_list:
         #Retrieve Sandbox ID by Sandbox name
         res = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications/' + app_guid + '/sandboxes?name=' + sandbox_name)
         response = res.json()
-        #print(res.json())
+        print(res.json())
         try:
             sandbox_guid = response['_embedded']['sandboxes'][0]['guid']
         except: 
@@ -100,6 +100,7 @@ for app_name in app_list:
         #Update Schedule of existing DA Job
         try:
             res = prepared_request('PUT', 'https://api.veracode.com/appsec/v1/applications/' + app_guid + '/sandboxes/' + sandbox_guid, json=data)
+            print(res.json())
             if res.status_code == 204:
                 print("\nScan Submitted Successfully: " + str(res.status_code) )
             else:
