@@ -88,6 +88,7 @@ for app_name in app_list:
         
     for sandbox_name in sandbox_list:
         #Retrieve Sandbox ID by Sandbox name
+        print(sandbox_name)
         res = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications/' + app_guid + '/sandboxes?name=' + sandbox_name)
         response = res.json()
         print(res.json())
@@ -98,7 +99,8 @@ for app_name in app_list:
             sys.exit(1)
 
         #Update Schedule of existing DA Job
-        res = prepared_request('PUT', 'https://api.veracode.com/appsec/v1/applications/' + app_guid + '/sandboxes/' + sandbox_guid + '?method=PATCH', json=data)
+        print(sandbox_guid)
+        res = prepared_request('PUT', 'https://api.veracode.com/appsec/v1/applications/' + app_guid + '/sandboxes/' + sandbox_guid, json=data)
         print(res.json())
         try:
             if res.status_code == 204:
