@@ -28,5 +28,6 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      curl -fsS https://tools.veracode.com/veracode-cli/install | sh
-      ./veracode static scan app/target/verademo.war
+       /Users/soumikroy/Downloads/veracode-cli_debug static scan app/target/verademo.war
+#      curl -fsS https://tools.veracode.com/veracode-cli/install | sh
+#      ./veracode static scan app/target/verademo.war
