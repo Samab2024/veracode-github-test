@@ -104,7 +104,8 @@ for app_name in app_list:
             sys.exit(1)
 
         #Update Schedule of existing DA Job
-        print(i + " " + sandbox_guid)
+        print(i)
+        print(" " + sandbox_guid)
         res = prepared_request('PUT', 'https://api.veracode.com/appsec/v1/applications/' + app_guid + '/sandboxes/' + sandbox_guid, json=data)
         print(res.status_code)
         try:
