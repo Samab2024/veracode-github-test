@@ -105,7 +105,7 @@ for app_name in app_list:
         #Update Schedule of existing DA Job
         print(sandbox_guid)
         res = prepared_request('PUT', 'https://api.veracode.com/appsec/v1/applications/' + app_guid + '/sandboxes/' + sandbox_guid, json=data)
-        print(res.json())
+        print(res.status_code)
         try:
             if res.status_code == 204:
                 print("\nSandbox Updated Successfully: " + str(res.status_code) )
