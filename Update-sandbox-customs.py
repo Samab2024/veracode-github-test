@@ -96,8 +96,8 @@ for app_name in app_list:
         try:
             sandboxes1 = response['_embedded']
             sandboxes2 = sandboxes1['sandboxes']
+            sandbox_guid = sandboxes2[i]['guid']
             print(sandboxes2)
-            sandbox_guid = sandboxes['_embedded']['sandboxes'][i]['guid']
             i += 1
         except: 
             print("Could not find Sandbox Details")
