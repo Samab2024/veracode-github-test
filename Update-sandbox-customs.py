@@ -15,9 +15,8 @@ from urllib.parse import urlparse
 #Jenkins:
 api_id = os.getenv("API_ID")
 api_secret = os.getenv("API_KEY")
-dynamic_job = os.getenv("JOB_NAME")
-#dynamic_job = 'Findings DAST'
-#app_name = 'Test Update 15 Nov'
+app_list = ['KT_TEST_IDE']
+sandbox_list = ['XML Report Test', 'IDE_SANDBOX']
 
 def veracode_hmac(host, url, method):
     signing_data = 'id={api_id}&host={host}&url={url}&method={method}'.format(
@@ -50,37 +49,62 @@ def prepared_request(method, end_point, json=None, query=None, file=None):
     session.mount(end_point, HTTPAdapter(max_retries=3))
     request = requests.Request(method, end_point, json=json, params=query, files=file)
     prepared_request = request.prepare()
-    prepared_request.headers['Authorization'] = veracode_hmac(
-        urlparse(end_point).hostname, prepared_request.path_url, method)
+    prepared_request.headers['Authorization'] = veracode_hmac(urlparse(end_point).hostname, prepared_request.path_url, method)
     res = session.send(prepared_request)
 
     return res
 
 # code above this line is reusable for all/most API calls
 
-#Payload for updating schedule of existing DA job to start now
-data =   { 
-    "schedule": 
-        {       
-            "now": True,
-            "duration": 
-                {
-                "length": 3,
-                "unit": "DAY"
-                }
-        }
+#Payload for updating Custom Fields
+data =   {
+  "custom_fields": [
+    {
+      "name": "Custom 3",
+      "value": ""
+    },
+    {
+      "name": "Custom 4",
+      "value": ""
+    },
+    {
+      "name": "Custom 5",
+      "value": ""
+    }
+  ]
 }
 
-print("Looking for Application: " + app_name )
-Retrieve App List by project name
-res = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications' + '?name=' + app_name)
-response = res.json()
-print(res.json())
-try:
-    app_id = response['_embedded']['applications'][0]['id']
-    app_guid = response['_embedded']['applications'][0]['guid']
-    app_name = response['_embedded']['applications'][0]['profile']['name']
-    print('Application GUID for ' + app_name + ' is ' + app_guid + '.')
-except: 
-    print("Could not find Application")
-    sys.exit(1)
+for app_name in app_list:
+    print("Looking for Application: " + app_name )
+    #Retrieve App ID by App name
+    res = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications' + '?name=' + app_name)
+    response = res.json()
+    #print(res.json())
+    try:
+        app_guid = response['_embedded']['applications'][0]['guid']
+    except: 
+        print("Could not find Application")
+        sys.exit(1)
+        
+    for sandbox_name in sandbox_list:
+        #Retrieve Sandbox ID by Sandbox name
+        res = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications/' + app_guid + '/sandboxes?name=' + )
+        response = res.json()
+        #print(res.json())
+        try:
+            sandbox_guid = response['_embedded']['sandboxes'][0]['guid']
+        except: 
+            print("Could not find Application Details")
+            sys.exit(1)
+
+        #Update Schedule of existing DA Job
+        try:
+        res = prepared_request('PUT', 'https://api.veracode.com/appsec/v1/applications/' + app_guid + '/sandboxes/' + sandbox_guid, json=data)
+        if res.status_code == 204:
+            print("\nScan Submitted Successfully: " + str(res.status_code) )
+        else:
+            response = res.json()
+            print("\nError encountered: " + response['_embedded']['errors'][0]['detail'])
+        except:
+            print("Error executing API Call")
+            sys.exit(1)
