@@ -97,15 +97,13 @@ for app_name in app_list:
             sandboxes1 = response['_embedded']
             sandboxes2 = sandboxes1['sandboxes']
             sandbox_guid = sandboxes2[i]['guid']
-            print(sandboxes2)
+            print(sandbox_guid)
             i += 1
         except: 
             print("\nCould not find Sandbox Details")
             sys.exit(1)
 
         #Update Schedule of existing DA Job
-        print(i)
-        print(" " + sandbox_guid)
         res = prepared_request('PUT', 'https://api.veracode.com/appsec/v1/applications/' + app_guid + '/sandboxes/' + sandbox_guid, json=data)
         print(res.status_code)
         try:
