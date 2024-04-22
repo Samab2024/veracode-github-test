@@ -16,7 +16,7 @@ from urllib.parse import urlparse
 api_id = os.getenv("API_ID")
 api_secret = os.getenv("API_KEY")
 app_list = ['KT_TEST_IDE']
-sandbox_list = ['XML Report Test', 'IDE_SANDBOX']
+sandbox_list = ['XML Report Test')#, 'IDE_SANDBOX']
 
 def veracode_hmac(host, url, method):
     signing_data = 'id={api_id}&host={host}&url={url}&method={method}'.format(
