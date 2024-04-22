@@ -94,7 +94,7 @@ for app_name in app_list:
         response = res.json()
         print(res.json())
         try:
-            sandbox_guid = response['_embedded']['sandboxes'][i]['guid']
+            sandbox_guid = response['_embedded']['sandboxes']['guid']
             i += 1
         except: 
             print("Could not find Sandbox Details")
