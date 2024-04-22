@@ -87,7 +87,7 @@ for app_name in app_list:
         print("Could not find Application")
         sys.exit(1)
         
-    for sandbox in sandbox_list:
+    for sandbox_name in sandbox_list:
         #Retrieve Sandbox ID by Sandbox name
         print(sandbox_name)
         res = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications/' + app_guid + '/sandboxes')
