@@ -99,12 +99,12 @@ for app_name in app_list:
 
         #Update Schedule of existing DA Job
         try:
-        res = prepared_request('PUT', 'https://api.veracode.com/appsec/v1/applications/' + app_guid + '/sandboxes/' + sandbox_guid, json=data)
-        if res.status_code == 204:
-            print("\nScan Submitted Successfully: " + str(res.status_code) )
-        else:
-            response = res.json()
-            print("\nError encountered: " + response['_embedded']['errors'][0]['detail'])
+            res = prepared_request('PUT', 'https://api.veracode.com/appsec/v1/applications/' + app_guid + '/sandboxes/' + sandbox_guid, json=data)
+            if res.status_code == 204:
+                print("\nScan Submitted Successfully: " + str(res.status_code) )
+            else:
+                response = res.json()
+                print("\nError encountered: " + response['_embedded']['errors'][0]['detail'])
         except:
             print("Error executing API Call")
             sys.exit(1)
