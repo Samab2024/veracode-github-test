@@ -17,6 +17,7 @@ api_id = os.getenv("API_ID")
 api_secret = os.getenv("API_KEY")
 app_list = ['KT_TEST_IDE']
 sandbox_list = ['XML Report Test', 'IDE_SANDBOX']
+i = 0
 
 def veracode_hmac(host, url, method):
     signing_data = 'id={api_id}&host={host}&url={url}&method={method}'.format(
@@ -86,21 +87,22 @@ for app_name in app_list:
         print("Could not find Application")
         sys.exit(1)
         
-    for sandbox_name in sandbox_list:
+    for sandbox in sandbox_list:
         #Retrieve Sandbox ID by Sandbox name
         print(sandbox_name)
-        res = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications/' + app_guid + '/sandboxes?name=' + sandbox_name)
+        res = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications/' + app_guid + '/sandboxes')
         response = res.json()
         print(res.json())
         try:
-            sandbox_guid = response['_embedded']['sandboxes'][0]['guid']
+            sandbox_guid = response['_embedded']['sandboxes'][i]['guid']
+            i += 1
         except: 
             print("Could not find Sandbox Details")
             sys.exit(1)
 
         #Update Schedule of existing DA Job
         print(sandbox_guid)
-        res = prepared_request('PUT', 'https://api.veracode.com/appsec/v1/applications/' + app_guid + '/sandboxes/' + sandbox_guid, json=data)
+        #res = prepared_request('PUT', 'https://api.veracode.com/appsec/v1/applications/' + app_guid + '/sandboxes/' + sandbox_guid, json=data)
         print(res.json())
         try:
             if res.status_code == 204:
