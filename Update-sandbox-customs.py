@@ -107,7 +107,7 @@ for app_name in app_list:
         res = prepared_request('PUT', 'https://api.veracode.com/appsec/v1/applications/' + app_guid + '/sandboxes/' + sandbox_guid, json=data)
         print(res.status_code)
         try:
-            if res.status_code == 204:
+            if res.status_code == 200:
                 print("\nSandbox Updated Successfully: " + str(res.status_code) )
             else:
                 response = res.json()
