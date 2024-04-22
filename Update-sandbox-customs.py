@@ -16,7 +16,7 @@ from urllib.parse import urlparse
 api_id = os.getenv("API_ID")
 api_secret = os.getenv("API_KEY")
 app_list = ['KT_TEST_IDE']
-sandbox_list = ['XML Report Test']#, 'IDE_SANDBOX']
+sandbox_list = ['XML Report Test', 'IDE_SANDBOX']
 
 def veracode_hmac(host, url, method):
     signing_data = 'id={api_id}&host={host}&url={url}&method={method}'.format(
@@ -94,13 +94,13 @@ for app_name in app_list:
         try:
             sandbox_guid = response['_embedded']['sandboxes'][0]['guid']
         except: 
-            print("Could not find Application Details")
+            print("Could not find Sandbox Details")
             sys.exit(1)
 
         #Update Schedule of existing DA Job
+        res = prepared_request('PUT', 'https://api.veracode.com/appsec/v1/applications/' + app_guid + '/sandboxes/' + sandbox_guid + '?method=PATCH', json=data)
+        print(res.json())
         try:
-            res = prepared_request('PUT', 'https://api.veracode.com/appsec/v1/applications/' + app_guid + '/sandboxes/' + sandbox_guid + '?method=PATCH', json=data)
-            print(res.json())
             if res.status_code == 204:
                 print("\nScan Submitted Successfully: " + str(res.status_code) )
             else:
