@@ -17,7 +17,7 @@ api_id = os.getenv("API_ID")
 api_secret = os.getenv("API_KEY")
 app_list = ['KT_TEST_IDE']
 sandbox_list = ['XML Report Test', 'IDE_SANDBOX']
-i = 0
+i = 1
 
 def veracode_hmac(host, url, method):
     signing_data = 'id={api_id}&host={host}&url={url}&method={method}'.format(
@@ -94,7 +94,7 @@ for app_name in app_list:
         response = res.json()
         print(res.json())
         try:
-            sandbox_guid = response['_embedded']['sandboxes']['guid']
+            sandbox_guid = response['_embedded']['sandboxes'][i]['guid']
             i += 1
         except: 
             print("Could not find Sandbox Details")
