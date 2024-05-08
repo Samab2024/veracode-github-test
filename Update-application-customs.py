@@ -80,7 +80,7 @@ for app_name in app_list:
     }
 
     #Update Schedule of existing DA Job
-    res = prepared_request('PATCH', 'https://api.veracode.com/appsec/v1/applications/' + app_guid, json=data)
+    res = prepared_request('PUT', 'https://api.veracode.com/appsec/v1/applications/' + app_guid + '?method=PATCH', json=data)
     #print(res.status_code)
     try:
         if res.status_code == 200:
