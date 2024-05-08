@@ -78,7 +78,9 @@ for app_name in app_list:
     #Retrieve App ID by App name
     res = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications' + '?name=' + app_name)
     response = res.json()
-    print(res.json())
+    #print(res.json())
+    app_guid = response['_embedded']['applications'][0]['guid']
+    print(app_guid)
     try:
         app_guid = response['_embedded']['applications'][0]['guid']
     except: 
