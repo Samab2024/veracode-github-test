@@ -73,7 +73,7 @@ for app_name in app_list:
       "profile": {
         "name": app_name,
         'custom_fields': [
-            {'name': 'Custom 2', 'value': 'TESTING'}, {'name': 'Custom 3', 'value': 'COMP1: : : '}, {'name': 'Custom 4', 'value': '[Mahi]'}, {'name': 'Custom 5', 'value': '[Unknown]'}
+            {'name': 'Custom 2', 'value': 'TESTING'}, {'name': 'Custom 3', 'value': 'COMP1: : : '}, {'name': 'Custom 4', 'value': '[Mahi]'}, {'name': 'Custom 5', 'value': 'Test'}
         ],
         "business_criticality": bus_crit
       }
