@@ -55,24 +55,6 @@ def prepared_request(method, end_point, json=None, query=None, file=None):
 
 # code above this line is reusable for all/most API calls
 
-#Payload for updating Custom Fields
-data =   {
-  "custom_fields": [
-    {
-      "name": "Custom 3",
-      "value": "TEST"
-    },
-    {
-      "name": "Custom 4",
-      "value": ""
-    },
-    {
-      "name": "Custom 5",
-      "value": ""
-    }
-  ]
-}
-
 for app_name in app_list:
     print("Looking for Application: " + app_name )
     #Retrieve App ID by App name
@@ -81,19 +63,36 @@ for app_name in app_list:
     #print(res.json())
     try:
         app_guid = response['_embedded']['applications'][0]['guid']
+        bus_crit = response['_embedded']['applications']['profile']['business_criticality']
+        print (app_guid + ' ' + bus_crit)
     except: 
         print("\nCould not find Application")
         sys.exit(1)
 
+    #Payload for updating Custom Fields
+    data =   {
+      "profile": {
+        "name": app_name,
+        "custom_fields": [
+          {
+            "name": "Custom 5",
+            "value": "Test"
+          }
+        ],
+        "business_criticality": bus_crit
+      }
+    }
+
+    print (data)
     #Update Schedule of existing DA Job
-    res = prepared_request('PUT', 'https://api.veracode.com/appsec/v1/applications/' + app_guid, json=data)
-    print(res.status_code)
-    try:
-        if res.status_code == 200:
-          print("\n Updated Successfully: " + str(res.status_code) )
-        else:
-          response = res.json()
-          print("\nError encountered: " + response['_embedded']['errors'][0]['detail'])
-    except:
-        print("\nError executing API Call")
-        sys.exit(1)
+    #res = prepared_request('PUT', 'https://api.veracode.com/appsec/v1/applications/' + app_guid, json=data)
+    #print(res.status_code)
+    #try:
+    #    if res.status_code == 200:
+    #      print("\n Updated Successfully: " + str(res.status_code) )
+    #    else:
+    #      response = res.json()
+    #      print("\nError encountered: " + response['_embedded']['errors'][0]['detail'])
+    #except:
+    #    print("\nError executing API Call")
+    #    sys.exit(1)
