@@ -61,7 +61,7 @@ for app_name in app_list:
     res = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications' + '?name=' + app_name)
     response = res.json()
     #print(res.json())
-    custom = response1['_embedded']['applications'][0]['profile']['custom_fields']
+    custom = response['_embedded']['applications'][0]['profile']['custom_fields']
     print(custom)
     try:
         app_guid = response['_embedded']['applications'][0]['guid']
