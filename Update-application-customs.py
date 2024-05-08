@@ -61,9 +61,9 @@ for app_name in app_list:
     res = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications' + '?name=' + app_name)
     response = res.json()
     #print(res.json())
+    bus_crit = response['_embedded']['applications']['profile']['business_criticality']
     try:
         app_guid = response['_embedded']['applications'][0]['guid']
-        bus_crit = response['_embedded']['applications']['profile']['business_criticality']
         print (app_guid + ' ' + bus_crit)
     except: 
         print("\nCould not find Application")
