@@ -84,10 +84,13 @@ for app_name in app_list:
 
     #Update Schedule of existing DA Job
     res = prepared_request('PUT', 'https://api.veracode.com/appsec/v1/applications/' + app_guid, json=data)
-    print(res.json)
+    #print(res.status_code)
     try:
         if res.status_code == 200:
           print("\nApplication Updated Successfully: " + str(res.status_code) )
+          res = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications' + '?name=' + app_name)
+          custom = response['_embedded']['applications'][0]['profile']['custom_fields']
+          print("\nUpdated Custom Data: " + custom)
         else:
           response = res.json()
           print("\nError encountered: " + response['_embedded']['errors'][0]['detail'])
