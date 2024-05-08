@@ -88,9 +88,9 @@ for app_name in app_list:
     try:
         if res.status_code == 200:
           print("\nApplication Updated Successfully: " + str(res.status_code) )
-          res = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications' + '?name=' + app_name)
-          response = res.json()
-          custom = response['_embedded']['applications'][0]['profile']['custom_fields']
+          res1 = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications' + '?name=' + app_name)
+          response1 = res1.json()
+          custom = response1['_embedded']['applications'][0]['profile']['custom_fields']
           print("\nUpdated Custom Data: " + custom)
         else:
           response = res.json()
