@@ -60,7 +60,7 @@ for app_name in app_list:
     #Retrieve App ID by App name
     res = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications' + '?name=' + app_name)
     response = res.json()
-    #print(res.json())
+    print(res.json())
     try:
         app_guid = response['_embedded']['applications'][0]['guid']
         bus_crit = response['_embedded']['applications'][0]['profile']['business_criticality']
@@ -87,6 +87,7 @@ for app_name in app_list:
           print("\nApplication Updated Successfully: " + str(res.status_code) )
           res1 = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications' + '?name=' + app_name)
           response1 = res1.json()
+          print(response1)
           custom = response1['_embedded']['applications'][0]['profile']['custom_fields']
           print("\nUpdated Custom Data: ")
           print(custom)
