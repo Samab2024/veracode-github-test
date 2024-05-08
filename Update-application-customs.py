@@ -72,30 +72,24 @@ for app_name in app_list:
     data =   {
       "profile": {
         "name": app_name,
-        "custom_fields": [
-          {
-            "name": "Custom 5",
-            "value": "Test"
-          }
+        'custom_fields': [
+            {'name': 'Custom 2', 'value': 'TESTING'}, {'name': 'Custom 3', 'value': 'COMP1: : : '}, {'name': 'Custom 4', 'value': '[Mahi]'}, {'name': 'Custom 5', 'value': '[Unknown]'}
         ],
         "business_criticality": bus_crit
       }
     }
 
     #Update Schedule of existing DA Job
-    res = prepared_request('PUT', 'https://api.veracode.com/appsec/v1/applications/' + app_guid, json=data)
+    res = prepared_request('PATCH', 'https://api.veracode.com/appsec/v1/applications/' + app_guid, json=data)
     #print(res.status_code)
-    res1 = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications' + '?name=' + app_name)
-    response1 = res1.json()
-    custom = response1['_embedded']['applications'][0]['profile']['custom_fields']
-    print("\nUpdated Custom Data: " + custom)
     try:
         if res.status_code == 200:
           print("\nApplication Updated Successfully: " + str(res.status_code) )
           res1 = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications' + '?name=' + app_name)
           response1 = res1.json()
-          #custom = response1['_embedded']['applications'][0]['profile']['custom_fields']
-          #print("\nUpdated Custom Data: " + custom)
+          custom = response1['_embedded']['applications'][0]['profile']['custom_fields']
+          print("\nUpdated Custom Data: ")
+          print(custom)
         else:
           response = res.json()
           print("\nError encountered: " + response['_embedded']['errors'][0]['detail'])
