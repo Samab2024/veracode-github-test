@@ -15,7 +15,7 @@ from urllib.parse import urlparse
 #Jenkins:
 api_id = os.getenv("API_ID")
 api_secret = os.getenv("API_KEY")
-app_list = ['KT_TEST_IDE']
+app_list = ['KT_TEST_IDE','Test Update 15 Nov','test_api_wrapper_new']
 
 def veracode_hmac(host, url, method):
     signing_data = 'id={api_id}&host={host}&url={url}&method={method}'.format(
