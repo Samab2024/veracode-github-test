@@ -79,7 +79,6 @@ for app_name in app_list:
     res = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications' + '?name=' + app_name)
     response = res.json()
     #print(res.json())
-    app_guid = response['_embedded']['applications'][0]['guid']
     print(app_guid)
     try:
         app_guid = response['_embedded']['applications'][0]['guid']
@@ -89,7 +88,7 @@ for app_name in app_list:
 
     #Update Schedule of existing DA Job
     res = prepared_request('PUT', 'https://api.veracode.com/appsec/v1/applications/' + app_guid, json=data)
-    #print(res.status_code)
+    print(res.status_code)
     try:
         if res.status_code == 200:
           print("\n Updated Successfully: " + str(res.status_code) )
