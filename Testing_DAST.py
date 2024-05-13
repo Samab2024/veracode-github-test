@@ -81,5 +81,5 @@ if __name__ == "__main__":
     log.setLevel(logging.INFO)
     log.setLevel(logging.DEBUG)
     a = DynamicAnalysis()
-    sscan_name='Findings DAST'
+    scan_name='Findings DAST'
     scans =a.scan_now(scan_name)
