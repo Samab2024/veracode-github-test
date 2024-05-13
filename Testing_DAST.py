@@ -1,8 +1,8 @@
 import os, sys, requests, json, logging, csv, argparse
 from veracode_api_signing.plugin_requests import RequestsAuthPluginVeracodeHMAC
-scan_name='Findings DAST'
+scan_name='TEST_NEW'
 app_name="{scan_name}"
-app='New-App'
+app='REST API Testing'
 api_base = "https://api.veracode.com/was/configservice/v1/"
 verifyCert=True
 
