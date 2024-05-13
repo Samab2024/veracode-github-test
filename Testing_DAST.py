@@ -16,6 +16,7 @@ class DynamicAnalysis:
         try:
             log.debug("Sending request to %s", url)
             response = requests.get(url, auth=RequestsAuthPluginVeracodeHMAC(), headers=self.headers, verify=verifyCert)
+            print(response.json)
             if response.ok:
                 return response.json()
             else:
@@ -29,6 +30,7 @@ class DynamicAnalysis:
         try:
             arg1 = "name=" + scan_name
             response = requests.get(api_base+"?"+arg1, auth=RequestsAuthPluginVeracodeHMAC(), headers=self.headers, verify=verifyCert)
+            print(response.json)
             analysis_summary = response.json()
             if response.ok:
                 if (recurse): 
@@ -66,6 +68,7 @@ class DynamicAnalysis:
         log.info("Updating scan to %s", url)
         log.debug("PUT Body: " + json.dumps(schedule_data, sort_keys=True, indent=4))
         response = requests.put(url, auth=RequestsAuthPluginVeracodeHMAC(), headers=self.headers, json=schedule_data, verify=verifyCert)
+        print(response.json)
         if response.ok:
             log.info("Successful response: %s", str(response))
             return response
