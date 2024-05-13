@@ -16,7 +16,6 @@ class DynamicAnalysis:
         try:
             log.debug("Sending request to %s", url)
             response = requests.get(url, auth=RequestsAuthPluginVeracodeHMAC(), headers=self.headers, verify=verifyCert)
-            print(response.json)
             if response.ok:
                 return response.json()
             else:
@@ -36,18 +35,23 @@ class DynamicAnalysis:
                 if (recurse): 
                     url = analysis_summary["_embedded"]["analyses"][0]["_links"]["scans"]["href"]
                     scan_details = self.get_data_request(url, "Exported_Detailed_Scan", export)
+                    print(scan_details)
                     url = analysis_summary["_embedded"]["analyses"][0]["_links"]["self"]["href"]
                     analysis = self.get_data_request(url, "Exported_Analysis", export)
+                    print(analysis)
                     url = analysis_summary["_embedded"]["analyses"][0]["_links"]["latest_occurrence"]["href"]
                     latest_occurrence = self.get_data_request(url, "Exported_Detailed_Scan", export)
+                    print(latest_occurrence)
                     analysis_occurrence_id  = latest_occurrence["analysis_occurrence_id"]
                     base_url="https://api.veracode.com/was/configservice/v1"
                     url = "%s/analysis_occurrences/%s/scan_occurrences" % (base_url, analysis_occurrence_id)
                     detailed_scan_occurrence = self.get_data_request(url, "Exported_DetailedScanOccurrence", export)
+                    print(detailed_scan_occurrence)
                     summary = detailed_scan_occurrence["_embedded"]["scan_occurrences"][0]["summary"]
                     log.debug("Summary: %s", json.dumps(summary, sort_keys=True, indent=0))
                     url = analysis_summary["_embedded"]["analyses"][0]["_links"]["audits"]["href"]
                     audit_data = self.get_data_request(url, "Exported_Audit_Data", export)
+                    print(audit_data)
                     return (analysis_summary, scan_details, analysis, latest_occurrence, audit_data)
                 else:
                     return (analysis_summary)
@@ -68,7 +72,6 @@ class DynamicAnalysis:
         log.info("Updating scan to %s", url)
         log.debug("PUT Body: " + json.dumps(schedule_data, sort_keys=True, indent=4))
         response = requests.put(url, auth=RequestsAuthPluginVeracodeHMAC(), headers=self.headers, json=schedule_data, verify=verifyCert)
-        print(response.json)
         if response.ok:
             log.info("Successful response: %s", str(response))
             return response
@@ -84,5 +87,5 @@ if __name__ == "__main__":
     log.setLevel(logging.INFO)
     log.setLevel(logging.DEBUG)
     a = DynamicAnalysis()
-    scan_name='Findings DAST'
+    #scan_name='Findings DAST'
     scans =a.scan_now(scan_name)
