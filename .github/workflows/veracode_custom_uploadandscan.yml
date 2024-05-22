@@ -21,13 +21,5 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Veracode Scan
-      run: java -jar VeracodeJavaAPI.jar \
-           -action "uploadandscan" \
-           -filepath "app/target/verademo.war" \
-           -vid '${{ secrets.VERACODE_API_ID }}' \
-           -vkey '${{ secrets.VERACODE_API_KEY }}' \
-           -version '${{ github.run_number }}' \
-           -autoscan "true" \
-           -appname "GITHUB" \
-           -createapp "true"
+      run: java -jar VeracodeJavaAPI.jar -action "uploadandscan" -filepath "app/target/verademo.war" -vid '${{ secrets.VERACODE_API_ID }}' -vkey '${{ secrets.VERACODE_API_KEY }}' -version '${{ github.run_number }}' -autoscan "true" -appname "GITHUB" -createapp "true"
            
