@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Build with Maven
-      run: mvn -B package --file ./app/pom.xml
+      run: mvn -B package --file ../app/pom.xml
 
   scan:
     runs-on: ubuntu-latest
@@ -20,7 +20,7 @@ jobs:
     - name: Veracode Scan
       run: java -jar VeracodeJavaAPI.jar \
            -action 'uploadandscan' \
-           -filepath './app/target/verademo.war' \
+           -filepath '../app/target/verademo.war' \
            -vid '${{ secrets.VERACODE_API_ID }}' \
            -vkey '${{ secrets.VERACODE_API_KEY }}' \
            -version '${{ github.run_number }}' \
