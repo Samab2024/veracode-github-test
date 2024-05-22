@@ -15,6 +15,5 @@ jobs:
       run: mvn -B package --file app/pom.xml
 
     - name: Veracode Scan
-    - uses: actions/checkout@v2
       run: java -jar VeracodeJavaAPI.jar -action uploadandscan -filepath app/target/verademo.war -vid '${{ secrets.VERACODE_API_ID }}' -vkey '${{ secrets.VERACODE_API_KEY }}' -version '${{ github.run_number }}' -autoscan true -appname GITHUB -createprofile true -deleteincompletescan 2 -scantimeout 60
            
