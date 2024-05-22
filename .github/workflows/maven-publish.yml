@@ -19,6 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
+    - uses: actions/checkout@v2
     - name: Veracode Scan
       run: java -jar VeracodeJavaAPI.jar \
            -action 'uploadandscan' \
