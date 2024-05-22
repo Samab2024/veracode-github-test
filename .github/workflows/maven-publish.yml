@@ -21,8 +21,8 @@ jobs:
       run: java -jar VeracodeJavaAPI.jar \
            -action 'uploadandscan' \
            -filepath 'app/target/verademo.war' \
-           -vid '${{ secret.VERACODE_API_ID }}' \
-           -vkey '${{ secret.VERACODE_API_KEY }}' \
+           -vid '${{ secrets.VERACODE_API_ID }}' \
+           -vkey '${{ secrets.VERACODE_API_KEY }}' \
            -version '${{ github.run_number }}' \
            -autoscan 'true' \
            -appname 'GITHUB' \
