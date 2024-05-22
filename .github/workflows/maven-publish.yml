@@ -11,7 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Build with Maven
-      run: mvn -B package --file ../app/pom.xml
+      run: |
+        ls -lrt
+        mvn -B package --file /app/pom.xml
 
   scan:
     runs-on: ubuntu-latest
