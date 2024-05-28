@@ -20,7 +20,6 @@ jobs:
       VERACODE_API_KEY_SECRET : ${{ secrets.VERACODE_API_KEY }}
 
     steps:
-      - uses: actions/checkout@v2
       - name: generate-sbom
         run: | 
           export APP_NAME=${{ secrets.VERACODE_APP_NAME }}
