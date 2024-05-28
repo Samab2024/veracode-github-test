@@ -18,11 +18,11 @@ jobs:
     env:
       VERACODE_API_KEY_ID: ${{ secrets.VERACODE_API_ID }}
       VERACODE_API_KEY_SECRET : ${{ secrets.VERACODE_API_KEY }}
+      APP_NAME : ${{ secrets.VERACODE_APP_NAME }}
 
     steps:
       - name: generate-sbom
         run: | 
-          export APP_NAME=${{ secrets.VERACODE_APP_NAME }}
           appguid=$(http --auth-type=veracode_hmac GET "https://api.veracode.com/appsec/v1/applications?name=${APP_NAME}" | jq -r '._embedded.applications[0].guid')
           echo GUID: ${appguid}
           http --auth-type=veracode_hmac GET "https://api.veracode.com/srcclr/sbom/v1/targets/${appguid}/cyclonedx?type=application" > sbom.json
