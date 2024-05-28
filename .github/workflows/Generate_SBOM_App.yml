@@ -23,6 +23,8 @@ jobs:
     steps:
       - name: generate-sbom
         run: | 
+          touch sbom.json
           appguid=$(http --auth-type=veracode_hmac GET "https://api.veracode.com/appsec/v1/applications?name=${APP_NAME}" | jq -r '._embedded.applications[0].guid')
           echo GUID: ${appguid}
-          echo `$(http --auth-type=veracode_hmac GET "https://api.veracode.com/srcclr/sbom/v1/targets/${appguid}/cyclonedx?type=application" | jq)`
+          http --auth-type=veracode_hmac GET "https://api.veracode.com/srcclr/sbom/v1/targets/${appguid}/cyclonedx?type=application" | jq > sbom.json
+          ls -lrt
