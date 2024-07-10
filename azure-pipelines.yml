@@ -39,7 +39,7 @@ steps:
     AnalysisService: 'Veracode API'
     veracodeAppProfile: 'KT_TEST_IDE'
     version: '$(build.buildNumber)-Veracode'
-    filepath: 'app/target/**.war'
+    filepath: './app/target/**.war'
     sandboxName: 'New_ADO'
     createSandBox: true
     failBuildIfUploadAndScanBuildStepFails: false
