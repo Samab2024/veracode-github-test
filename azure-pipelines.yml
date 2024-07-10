@@ -62,3 +62,14 @@ steps:
     iterationPath: '$(system.teamProject)'
     overwriteIterationPath: true
     flawImportLimit: '10'
+
+- task: VeracodePipelineScan@0
+  inputs:
+    VeracodeAPIID: '$(VERACODE_API_ID)'
+    VeracodeAPIsecret: '$(VERACODE_API_KEY)'
+    fileToScan: '/Users/soumikroy/myagent/_work/5/s/app/target/verademo.war'
+    policyName: 'Veracode Recommended Medium + SCA'
+    baselineFileGeneration: true
+    baselineFileStorageProject: 'Azure Flaw Import Testing'
+    baselineFileStorageReponame: 'Azure Flaw Import Testing'
+    baselineFileStorageBranch: 'refs/heads/main'
