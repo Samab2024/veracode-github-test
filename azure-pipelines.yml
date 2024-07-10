@@ -20,14 +20,45 @@ steps:
     mavenAuthenticateFeed: false
     effectivePomSkip: false
     sonarQubeRunAnalysis: false
-- task: Bash@3
-  displayName: Veracode CLI SCA & SBOM Generation
-  env:
-    VERACODE_API_KEY_ID: $(VERACODE_API_KEY_ID)
-    VERACODE_API_KEY_SECRET: $(VERACODE_API_KEY_SECRET)
+
+# - task: Bash@3
+#   displayName: Veracode CLI SCA & SBOM Generation
+#   env:
+#     VERACODE_API_KEY_ID: $(VERACODE_API_KEY_ID)
+#     VERACODE_API_KEY_SECRET: $(VERACODE_API_KEY_SECRET)
+#   inputs:
+#     targetType: 'inline'
+#     script: |
+#        /Users/soumikroy/Downloads/veracode-cli_debug static scan app/target/verademo.war
+# #      curl -fsS https://tools.veracode.com/veracode-cli/install | sh
+# #      ./veracode static scan app/target/verademo.war
+
+- task: Veracode@3
   inputs:
-    targetType: 'inline'
-    script: |
-       /Users/soumikroy/Downloads/veracode-cli_debug static scan app/target/verademo.war
-#      curl -fsS https://tools.veracode.com/veracode-cli/install | sh
-#      ./veracode static scan app/target/verademo.war
+    ConnectionDetailsSelection: 'Service Connection'
+    AnalysisService: 'Veracode API'
+    veracodeAppProfile: 'KT_TEST_IDE'
+    version: '$(build.buildNumber)-Veracode'
+    filepath: 'app/target/**.war'
+    sandboxName: 'New_ADO'
+    createSandBox: true
+    failBuildIfUploadAndScanBuildStepFails: false
+    importResults: true
+    failBuildOnPolicyFail: false
+    maximumWaitTime: '60'
+
+- task: Veracode Flaw Importer@3
+  inputs:
+    ConnectionDetailsSelection: 'Service Connection'
+    AnalysisService: 'Veracode API'
+    failBuildIfFlawImporterFails: true
+    veracodeAppProfile: 'KT_TEST_IDE'
+    sandboxName: 'New_ADO'
+    scanType: 'Dynamic, Static, SCA'
+    importType: 'All Flaws Violating Policy'
+    workItemType: 'Bug'
+    area: '$(system.teamProject)'
+    overwriteAreaPathInWorkItemsOnImport: true
+    iterationPath: '$(system.teamProject)'
+    overwriteIterationPath: true
+    flawImportLimit: '10'
