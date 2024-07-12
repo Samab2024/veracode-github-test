@@ -12,7 +12,7 @@ from urllib.parse import urlparse
 
 #Setup variables according to environment
 
-#CI/CD parameters (below example for Jenkins):
+#CI/CD parameters (below example):
 api_id = os.getenv("API_ID")
 api_secret = os.getenv("API_KEY")
 
