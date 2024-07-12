@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import os
-import time                                                                     
-import hmac                                                                     
+import time 
+import hmac
 import codecs
 import json  
 import sys                                                              
