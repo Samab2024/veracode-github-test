@@ -15,6 +15,7 @@ from urllib.parse import urlparse
 #CI/CD parameters (below example):
 api_id = os.getenv("API_ID")
 api_secret = os.getenv("API_KEY")
+bu_name = os.getenv("BU")
 
 def veracode_hmac(host, url, method):
     signing_data = 'id={api_id}&host={host}&url={url}&method={method}'.format(
@@ -56,19 +57,10 @@ def prepared_request(method, end_point, json=None, query=None, file=None):
 
 print("\nLooking for Applications accessible to the profile\n")
 #Retrieve Application_data name
-res = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications')
+res = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications?business_unit=' + bu_name)
 response = res.json()
 records = len(response)
 #print(response)
-print('APP_ID|APP_GUID|POLICY|STATUS|LAST_POLICY_CHECK_DATE')
-for x in range(0, records - 1):
-    app_id=response['_embedded']['applications'][x]['id']
-    app_guid=response['_embedded']['applications'][x]['guid']
-    Policy_Name=response['_embedded']['applications'][x]['profile']['policies'][0]['name']
-    Policy_Check_Status=response['_embedded']['applications'][x]['profile']['policies'][0]['policy_compliance_status']
-    Last_Policy_Check_Date=response['_embedded']['applications'][x]['last_policy_compliance_check_date']
-    print(str(app_id) + '|' + app_guid + '|' + Policy_Name + '|' + Policy_Check_Status + '|' + Last_Policy_Check_Date)
-    x=x+1
 try:
     print('APP_ID|APP_GUID|POLICY|STATUS|LAST_POLICY_CHECK_DATE')
     for x in range(0, records - 1):
@@ -77,7 +69,7 @@ try:
         Policy_Name=response['_embedded']['applications'][x]['profile']['policies'][0]['name']
         Policy_Check_Status=response['_embedded']['applications'][x]['profile']['policies'][0]['policy_compliance_status']
         Last_Policy_Check_Date=response['_embedded']['applications'][x]['last_policy_compliance_check_date']
-        print(app_id + '|' + app_guid + '|' + Policy_Name + '|' + Policy_Check_Status + '|' + Last_Policy_Check_Date)
+        print(str(app_id) + '|' + app_guid + '|' + Policy_Name + '|' + Policy_Check_Status + '|' + Last_Policy_Check_Date)
         x=x+1
 except: 
     print("\nError executing API Call")
