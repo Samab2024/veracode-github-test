@@ -60,7 +60,7 @@ res = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications')
 response = res.json()
 try:
     print('APP_ID|APP_GUID|POLICY|STATUS|LAST_POLICY_CHECK_DATE')
-    for response._embedded.applocations
+    for response._embedded.applocations:
         app_id=response._embedded.applocations.id
         app_guid=response._embedded.applocations.guid
         Policy_Name=response._embedded.applocations.policies.name
