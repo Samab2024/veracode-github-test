@@ -54,11 +54,46 @@ def prepared_request(method, end_point, json=None, query=None, file=None):
 
 # code above this line is reusable for all/most API calls
 
+var template = `
+<style type="text/css">
+    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}
+    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}
+    .tftable tr {background-color:#ffffff;}
+    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}
+    .tftable tr:hover {background-color:#e0ffff;}
+</style>
+
+<table class="tftable" border="1">
+    <tr>
+        <th>App ID</th>
+        <th>App GUID</th>
+        <th>Policy</th>
+        <th>Policy Compliance Status</th>
+        <th>Last Ploicy Check</th>
+    </tr>
+    
+    {{#each response._embedded.findings}}
+        <tr>
+            <td>{{id}}</td>
+            <td>{{guid}}</td>
+            <td>{{policies.name}}</td>
+            <td>{{policies.policy_compliance_status}}</td>
+            <td>{{last_policy_compliance_check_date}}</td>
+        </tr>
+    {{/each}}
+</table>
+`;
+
+function constructVisualizerPayload() {
+    return { response: pm.response.json() }
+}
+
 print("\nLooking for Applications accessible to the profile\n")
 #Retrieve Application_data name
 res = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications')
 response = res.json()
 try:
+    pm.visualizer.set(template, constructVisualizerPayload());
     print(response)
 except: 
     print("\nError executing API Call")
