@@ -58,16 +58,18 @@ print("\nLooking for Applications accessible to the profile\n")
 #Retrieve Application_data name
 res = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications')
 response = res.json()
-print(len(response))
+records = len(response)
 try:
     print('APP_ID|APP_GUID|POLICY|STATUS|LAST_POLICY_CHECK_DATE')
-    for x in res.count():
+    x=0
+    for (x<records):
         app_id=response['_embedded']['applocations'][x]['id']
         app_guid=response['_embedded']['applocations'][x]['guid']
         Policy_Name=rresponse['_embedded']['applocations'][x]['policies']['name']
         Policy_Check_Status=response['_embedded']['applocations'][x]['policies']['policy_compliance_status']
         Last_Policy_Check_Date=response['_embedded']['applocations'][x]['last_policy_compliance_check_date']
         print(app_id + '|' + app_guid + '|' + Policy_Name + '|' + Policy_Check_Status + '|' + Last_Policy_Check_Date)
+        x=x+1
 except: 
     print("\nError executing API Call")
     sys.exit(1)
