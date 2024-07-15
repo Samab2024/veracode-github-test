@@ -61,8 +61,7 @@ response = res.json()
 records = len(response)
 try:
     print('APP_ID|APP_GUID|POLICY|STATUS|LAST_POLICY_CHECK_DATE')
-    x=0
-    for (x<records):
+    for x in range(0, records):
         app_id=response['_embedded']['applocations'][x]['id']
         app_guid=response['_embedded']['applocations'][x]['guid']
         Policy_Name=rresponse['_embedded']['applocations'][x]['policies']['name']
