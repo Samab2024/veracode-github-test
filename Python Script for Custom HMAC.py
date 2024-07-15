@@ -61,7 +61,7 @@ response = res.json()
 records = len(response)
 app_id=response['_embedded']['applications'][0]['id']
 app_guid=response['_embedded']['applications'][0]['guid']
-Policy_Name=rresponse['_embedded']['applications'][0]['policies']['name']
+Policy_Name=response['_embedded']['applications'][0]['policies']['name']
 Policy_Check_Status=response['_embedded']['applications'][0]['policies']['policy_compliance_status']
 Last_Policy_Check_Date=response['_embedded']['applications'][0]['last_policy_compliance_check_date']
 try:
@@ -69,7 +69,7 @@ try:
     for x in range(0, records):
         app_id=response['_embedded']['applications'][x]['id']
         app_guid=response['_embedded']['applications'][x]['guid']
-        Policy_Name=rresponse['_embedded']['applications'][x]['policies']['name']
+        Policy_Name=response['_embedded']['applications'][x]['policies']['name']
         Policy_Check_Status=response['_embedded']['applications'][x]['policies']['policy_compliance_status']
         Last_Policy_Check_Date=response['_embedded']['applications'][x]['last_policy_compliance_check_date']
         print(app_id + '|' + app_guid + '|' + Policy_Name + '|' + Policy_Check_Status + '|' + Last_Policy_Check_Date)
