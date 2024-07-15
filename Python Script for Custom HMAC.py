@@ -58,6 +58,7 @@ print("\nLooking for Applications accessible to the profile\n")
 #Retrieve Application_data name
 res = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications')
 response = res.json()
+print(response)
 records = len(response)
 app_id=response['_embedded']['applications'][0]['id']
 app_guid=response['_embedded']['applications'][0]['guid']
