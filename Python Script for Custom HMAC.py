@@ -54,39 +54,19 @@ def prepared_request(method, end_point, json=None, query=None, file=None):
 
 # code above this line is reusable for all/most API calls
 
-var template = `
-<table class="tftable" border="1">
-    <tr>
-        <th>App ID</th>
-        <th>App GUID</th>
-        <th>Policy</th>
-        <th>Policy Compliance Status</th>
-        <th>Last Ploicy Check</th>
-    </tr>
-    
-    {{#each response._embedded.findings}}
-        <tr>
-            <td>{{id}}</td>
-            <td>{{guid}}</td>
-            <td>{{policies.name}}</td>
-            <td>{{policies.policy_compliance_status}}</td>
-            <td>{{last_policy_compliance_check_date}}</td>
-        </tr>
-    {{/each}}
-</table>
-`;
-
-function constructVisualizerPayload() {
-    return { response: pm.response.json() }
-}
-
 print("\nLooking for Applications accessible to the profile\n")
 #Retrieve Application_data name
 res = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications')
 response = res.json()
 try:
-    pm.visualizer.set(template, constructVisualizerPayload());
-    print(response)
+    print('APP_ID|APP_GUID|POLICY|STATUS|LAST_POLICY_CHECK_DATE')
+    for response._embedded.applocations
+        app_id=response._embedded.applocations.id
+        app_guid=response._embedded.applocations.guid
+        Policy_Name=response._embedded.applocations.policies.name
+        Policy_Check_Status=response._embedded.applocations.policies.policy_compliance_status
+        Last_Policy_Check_Date=response._embedded.applocations.last_policy_compliance_check_date
+        print(app_id + '|' + app_guid + '|' + Policy_Name + '|' + Policy_Check_Status + '|' + Last_Policy_Check_Date)
 except: 
     print("\nError executing API Call")
     sys.exit(1)
