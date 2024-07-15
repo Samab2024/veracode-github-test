@@ -63,7 +63,7 @@ records = len(response)
 #print(response)
 try:
     print('APP_ID | APP_GUID | POLICY | STATUS | LAST_POLICY_CHECK_DATE')
-    for x in range(0, records - 1):
+    for x in range(0, records):
         app_id=response['_embedded']['applications'][x]['id']
         app_guid=response['_embedded']['applications'][x]['guid']
         Policy_Name=response['_embedded']['applications'][x]['profile']['policies'][0]['name']
