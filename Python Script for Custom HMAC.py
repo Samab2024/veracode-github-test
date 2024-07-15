@@ -58,7 +58,7 @@ print("\nLooking for Applications accessible to the profile\n")
 #Retrieve Application_data name
 res = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications')
 response = res.json()
-print(res.count())
+print(response.length())
 try:
     print('APP_ID|APP_GUID|POLICY|STATUS|LAST_POLICY_CHECK_DATE')
     for x in res.count():
