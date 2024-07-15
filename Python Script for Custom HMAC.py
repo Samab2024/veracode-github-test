@@ -60,8 +60,8 @@ print("\nLooking for Applications accessible to the profile\n")
 res = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications?size=500&business_unit=' + bu_name)
 response = res.json()
 records = len(response)
-print(response)
-print(response['_embedded']['applications'])
+#print(response)
+print(len(response['_embedded']['applications']))
 try:
     print('APP_ID | APP_GUID | POLICY | STATUS | LAST_POLICY_CHECK_DATE')
     for x in range(0, records - 1):
