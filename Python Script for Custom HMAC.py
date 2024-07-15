@@ -57,13 +57,13 @@ def prepared_request(method, end_point, json=None, query=None, file=None):
 
 print("\nLooking for Applications accessible to the profile\n")
 #Retrieve Application_data name
-res = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications?business_unit=' + bu_name)
+res = prepared_request('GET', 'https://api.veracode.com/appsec/v1/applications?size=500&business_unit=' + bu_name)
 response = res.json()
 records = len(response)
 #print(response)
 try:
     print('APP_ID | APP_GUID | POLICY | STATUS | LAST_POLICY_CHECK_DATE')
-    for x in range(0, records):
+    for x in range(0, records - 1):
         app_id=response['_embedded']['applications'][x]['id']
         app_guid=response['_embedded']['applications'][x]['guid']
         Policy_Name=response['_embedded']['applications'][x]['profile']['policies'][0]['name']
