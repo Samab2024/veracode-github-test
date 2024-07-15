@@ -62,14 +62,14 @@ response = res.json()
 records = len(response)
 #print(response)
 try:
-    print('APP_ID|APP_GUID|POLICY|STATUS|LAST_POLICY_CHECK_DATE')
+    print('APP_ID | APP_GUID | POLICY | STATUS | LAST_POLICY_CHECK_DATE')
     for x in range(0, records - 1):
         app_id=response['_embedded']['applications'][x]['id']
         app_guid=response['_embedded']['applications'][x]['guid']
         Policy_Name=response['_embedded']['applications'][x]['profile']['policies'][0]['name']
         Policy_Check_Status=response['_embedded']['applications'][x]['profile']['policies'][0]['policy_compliance_status']
         Last_Policy_Check_Date=response['_embedded']['applications'][x]['last_policy_compliance_check_date']
-        print(str(app_id) + '|' + app_guid + '|' + Policy_Name + '|' + Policy_Check_Status + '|' + Last_Policy_Check_Date)
+        print(str(app_id) + ' | ' + app_guid + ' | ' + Policy_Name + ' | ' + Policy_Check_Status + ' | ' + Last_Policy_Check_Date)
         x=x+1
 except: 
     print("\nError executing API Call")
