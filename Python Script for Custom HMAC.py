@@ -67,7 +67,7 @@ Policy_Check_Status=response['_embedded']['applications'][0]['profile']['policie
 Last_Policy_Check_Date=response['_embedded']['applications'][0]['last_policy_compliance_check_date']
 try:
     print('APP_ID|APP_GUID|POLICY|STATUS|LAST_POLICY_CHECK_DATE')
-    for x in range(0, records):
+    for x in range(0, records - 1):
         app_id=response['_embedded']['applications'][x]['id']
         app_guid=response['_embedded']['applications'][x]['guid']
         Policy_Name=response['_embedded']['applications'][x]['profile']['policies'][0]['name']
