@@ -61,11 +61,11 @@ response = res.json()
 try:
     print('APP_ID|APP_GUID|POLICY|STATUS|LAST_POLICY_CHECK_DATE')
     for x in res.count():
-        app_id=response[_embedded][applocations][x]id
-        app_guid=response._embedded.applocations.guid
-        Policy_Name=response._embedded.applocations.policies.name
-        Policy_Check_Status=response._embedded.applocations.policies.policy_compliance_status
-        Last_Policy_Check_Date=response._embedded.applocations.last_policy_compliance_check_date
+        app_id=response['_embedded']['applocations'][x]['id']
+        app_guid=response['_embedded']['applocations'][x]['guid']
+        Policy_Name=rresponse['_embedded']['applocations'][x]['policies']['name']
+        Policy_Check_Status=response['_embedded']['applocations'][x]['policies']['policy_compliance_status']
+        Last_Policy_Check_Date=response['_embedded']['applocations'][x]['last_policy_compliance_check_date']
         print(app_id + '|' + app_guid + '|' + Policy_Name + '|' + Policy_Check_Status + '|' + Last_Policy_Check_Date)
 except: 
     print("\nError executing API Call")
