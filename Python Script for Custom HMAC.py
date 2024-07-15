@@ -62,8 +62,8 @@ print(response)
 records = len(response)
 app_id=response['_embedded']['applications'][0]['id']
 app_guid=response['_embedded']['applications'][0]['guid']
-#Policy_Name=response['_embedded']['applications'][0]['profile']['policies']['name']
-Policy_Check_Status=response['_embedded']['applications'][0]['profile']['policies']['policy_compliance_status']
+Policy_Name=response['_embedded']['applications'][0]['profile']['policies'][1]
+Policy_Check_Status=response['_embedded']['applications'][0]['profile']['policies'][3]
 Last_Policy_Check_Date=response['_embedded']['applications'][0]['last_policy_compliance_check_date']
 try:
     print('APP_ID|APP_GUID|POLICY|STATUS|LAST_POLICY_CHECK_DATE')
