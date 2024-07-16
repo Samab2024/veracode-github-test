@@ -10,65 +10,154 @@ pool:
   name: default
 
 steps:
-- task: Maven@4
-  inputs:
-    mavenPomFile: 'app/pom.xml'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    javaHomeOption: 'JDKVersion'
-    mavenVersionOption: 'Default'
-    mavenAuthenticateFeed: false
-    effectivePomSkip: false
-    sonarQubeRunAnalysis: false
-
-# - task: Bash@3
-#   displayName: Veracode CLI SCA & SBOM Generation
-#   env:
-#     VERACODE_API_KEY_ID: $(VERACODE_API_KEY_ID)
-#     VERACODE_API_KEY_SECRET: $(VERACODE_API_KEY_SECRET)
+# - task: Maven@4
 #   inputs:
-#     targetType: 'inline'
-#     script: |
-#        /Users/soumikroy/Downloads/veracode-cli_debug static scan app/target/verademo.war
-# #      curl -fsS https://tools.veracode.com/veracode-cli/install | sh
-# #      ./veracode static scan app/target/verademo.war
+#     mavenPomFile: 'app/pom.xml'
+#     publishJUnitResults: true
+#     testResultsFiles: '**/surefire-reports/TEST-*.xml'
+#     javaHomeOption: 'JDKVersion'
+#     mavenVersionOption: 'Default'
+#     mavenAuthenticateFeed: false
+#     effectivePomSkip: false
+#     sonarQubeRunAnalysis: false
 
-- task: Veracode@3
-  inputs:
-    ConnectionDetailsSelection: 'Service Connection'
-    AnalysisService: 'Veracode API'
-    veracodeAppProfile: 'KT_TEST_IDE'
-    version: '$(build.buildNumber)-Veracode'
-    filepath: '/Users/soumikroy/myagent/_work/5/s/app/target/verademo.war'
-    sandboxName: 'New_ADO'
-    createSandBox: true
-    failBuildIfUploadAndScanBuildStepFails: false
-    importResults: true
-    failBuildOnPolicyFail: false
-    maximumWaitTime: '60'
+# # - task: Bash@3
+# #   displayName: Veracode CLI SCA & SBOM Generation
+# #   env:
+# #     VERACODE_API_KEY_ID: $(VERACODE_API_KEY_ID)
+# #     VERACODE_API_KEY_SECRET: $(VERACODE_API_KEY_SECRET)
+# #   inputs:
+# #     targetType: 'inline'
+# #     script: |
+# #        /Users/soumikroy/Downloads/veracode-cli_debug static scan app/target/verademo.war
+# # #      curl -fsS https://tools.veracode.com/veracode-cli/install | sh
+# # #      ./veracode static scan app/target/verademo.war
 
-- task: Veracode Flaw Importer@3
-  inputs:
-    ConnectionDetailsSelection: 'Service Connection'
-    AnalysisService: 'Veracode API'
-    failBuildIfFlawImporterFails: true
-    veracodeAppProfile: 'KT_TEST_IDE'
-    sandboxName: 'New_ADO'
-    scanType: 'Dynamic, Static, SCA'
-    importType: 'All Flaws Violating Policy'
-    workItemType: 'Bug'
-    area: '$(system.teamProject)'
-    overwriteAreaPathInWorkItemsOnImport: true
-    iterationPath: '$(system.teamProject)'
-    overwriteIterationPath: true
-    flawImportLimit: '10'
+# - task: Veracode@3
+#   inputs:
+#     ConnectionDetailsSelection: 'Service Connection'
+#     AnalysisService: 'Veracode API'
+#     veracodeAppProfile: 'KT_TEST_IDE'
+#     version: '$(build.buildNumber)-Veracode'
+#     filepath: '/Users/soumikroy/myagent/_work/5/s/app/target/verademo.war'
+#     sandboxName: 'New_ADO'
+#     createSandBox: true
+#     failBuildIfUploadAndScanBuildStepFails: false
+#     importResults: true
+#     failBuildOnPolicyFail: false
+#     maximumWaitTime: '60'
 
-- task: VeracodePipelineScan@0
+# - task: Veracode Flaw Importer@3
+#   inputs:
+#     ConnectionDetailsSelection: 'Service Connection'
+#     AnalysisService: 'Veracode API'
+#     failBuildIfFlawImporterFails: true
+#     veracodeAppProfile: 'KT_TEST_IDE'
+#     sandboxName: 'New_ADO'
+#     scanType: 'Dynamic, Static, SCA'
+#     importType: 'All Flaws Violating Policy'
+#     workItemType: 'Bug'
+#     area: '$(system.teamProject)'
+#     overwriteAreaPathInWorkItemsOnImport: true
+#     iterationPath: '$(system.teamProject)'
+#     overwriteIterationPath: true
+#     flawImportLimit: '10'
+
+# - task: VeracodePipelineScan@0
+#   inputs:
+#     VeracodeAPIID: '$(VERACODE_API_ID)'
+#     VeracodeAPIsecret: '$(VERACODE_API_KEY)'
+#     fileToScan: '/Users/soumikroy/myagent/_work/5/s/app/target/verademo.war'
+#     baselineFileGeneration: true
+#     baselineFileStorageProject: 'Azure Flaw Import Testing'
+#     baselineFileStorageReponame: 'Azure Flaw Import Testing'
+#     baselineFileStorageBranch: 'refs/heads/main'
+
+- task: PythonScript@0
   inputs:
-    VeracodeAPIID: '$(VERACODE_API_ID)'
-    VeracodeAPIsecret: '$(VERACODE_API_KEY)'
-    fileToScan: '/Users/soumikroy/myagent/_work/5/s/app/target/verademo.war'
-    baselineFileGeneration: true
-    baselineFileStorageProject: 'Azure Flaw Import Testing'
-    baselineFileStorageReponame: 'Azure Flaw Import Testing'
-    baselineFileStorageBranch: 'refs/heads/main'
+    scriptSource: 'inline'
+    script: |
+      import sys
+      import os
+      import subprocess
+      from pathlib import Path
+      
+      file_name = sys.argv[1] #Expects file name parsed based on application profile
+      file_path = sys.argv[2] #Expects filepath when downloaded file would be placed which has been passed to this inline script through its arguments
+      print (f'--> This is the file_name passed through arument: {file_name}')
+      print(f'--> This is the download file path passed through argument: {file_path}')
+      print(f"--> APPLICATION NAME Scan result to be downloaded for: {file_name}")
+      
+      #Extracting app_id of app being scanned
+      
+      app_id = ' '
+      application_line = ' '
+      app_id_cmd = f''' http --auth-type=veracode_hmac --ignore-stdin https://analysiscenter.veracode.com/api/5.0/getapplist.do '''
+      try:
+          app_id_res = subprocess.run(app_id_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+      except Exception as e:
+          print(f'''--> This is the error thrown in fetching app_id list: {app_id_res} ''')
+      
+      splitted_app_id_res = app_id_res.stdout.decode().split('\n')
+      for i in splitted_app_id_res:
+        if file_name in i:
+          application_line += i
+          splitted_res = application_line.split('\n')
+          splitted_app_id_items = splitted_res[0].split(' ')
+          for i in splitted_app_id_items:
+            if 'app_id' in i:
+              app_id_item_index = splitted_app_id_items.index(i)
+              app_id_item = splitted_app_id_items[app_id_item_index]
+              app_id = app_id_item.split('=')[1].strip('"')
+              print(f"##vso[task.setvariable variable=app_id_var;isoutput=true]{app_id}")
+              print (f"--> APP_Name: {file_name}")
+              print(f"--> App_Id: {app_id}")
+              
+              #extracting build_Id based on app_id
+              if app_id:
+      
+                cmd = f'''http --auth-type=veracode_hmac --ignore-stdin https://analysiscenter.veracode.com/api/5.0/getbuildlist.do "app_id=={app_id}" | grep 'build_id' ''' # | grep -v 'http' '''
+                try:
+                    res = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+                except Exception as e:
+                    print (f'--> Exctracting build Id for this app encountered below issued. {res}')
+                if res.stdout.decode():    
+                    print(f'--> Below is the list of build IDs of this application')
+                    print(res.stdout.decode())
+                    splitted_res = res.stdout.decode().split('\n')
+                    if splitted_res[ -1 ] != '':
+                        last_build_line = splitted_res[ -1 ]
+                    elif splitted_res[ -2 ] != '':
+                        last_build_line = splitted_res[ -2]
+                    elif splitted_res[ -3 ] != '':
+                        last_build_line = splitted_res[ -3]
+                    else:
+                        last_build_line = splitted_res[ -5]
+      
+                    splitted_last_build_line = last_build_line.split(' ')
+      
+                if splitted_last_build_line:
+                    last_build_id = ' '
+                    for i in splitted_last_build_line:
+                        if 'build_id=' in i:
+                            last_build_id = i
+
+                    if last_build_id:
+                        last_build_id = (last_build_id.split('=')[1]).strip('"')
+                        print (f'This is last_build_id extrated: {last_build_id}')
+                        print(f"##vso[task.setvariable variable=last_build_id_var;isoutput=true]{last_build_id}")
+                    else:
+                        print("--> WARNING! Last build ID could not be found, It may cause issues in scan progress" )
+
+          arguments: '$(Retrieving_applicaton_name.app_profile_name) $(system.defaultworkingdirectory)/pipeline_storage/build/'          
+
+        name: build_id_extraction_task
+        condition: succeededOrFailed() 
+      
+      #Displaying App_id and its last build id
+      - script: |
+          last_build_id=$(build_id_extraction_task.last_build_id_var)
+          echo 'This is last_build_id of this app -->:' $last_build_id
+          app_id=$(build_id_extraction_task.app_id_var)
+          echo 'This is app_id of this app -->:' $app_id
+        name: ID_app_and_its_last_last_build
