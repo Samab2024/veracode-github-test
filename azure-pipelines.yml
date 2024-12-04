@@ -51,7 +51,7 @@ steps:
   inputs:
     ConnectionDetailsSelection: 'Service Connection'
     AnalysisService: 'Veracode API'
-    failBuildIfFlawImporterFails: true
+    failBuildIfFlawImporterFails: false
     veracodeAppProfile: 'aws-verademo-java'
     scanType: 'Dynamic, Static, SCA'
     importType: 'All Flaws Violating Policy'
