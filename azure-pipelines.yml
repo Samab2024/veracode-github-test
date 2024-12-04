@@ -52,8 +52,7 @@ steps:
     ConnectionDetailsSelection: 'Service Connection'
     AnalysisService: 'Veracode API'
     failBuildIfFlawImporterFails: true
-    veracodeAppProfile: 'Test Grace-1'
-    sandboxName: 'Test'
+    veracodeAppProfile: 'aws-verademo-java'
     scanType: 'Dynamic, Static, SCA'
     importType: 'All Flaws Violating Policy'
     workItemType: 'Bug'
