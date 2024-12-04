@@ -54,7 +54,6 @@ steps:
     AnalysisService: 'Veracode API'
     failBuildIfFlawImporterFails: true
     veracodeAppProfile: 'Test Grace'
-    sandboxName: 'New_ADO'
     scanType: 'Dynamic, Static, SCA'
     importType: 'All Flaws Violating Policy'
     workItemType: 'Bug'
