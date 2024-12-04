@@ -51,7 +51,7 @@ steps:
   inputs:
     ConnectionDetailsSelection: 'Service Connection'
     AnalysisService: 'Veracode API'
-    veracodeAppProfile: 'Test Grace'
+    veracodeAppProfile: 'Test Grace-1'
     sandboxName: 'Test'
     scanType: 'Dynamic, Static, SCA'
     importType: 'All Flaws Violating Policy'
