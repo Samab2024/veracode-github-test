@@ -58,7 +58,7 @@ steps:
       VERACODE_WRAPPER_VERSION=$(curl -sS "https://search.maven.org/solrsearch/select?q=g:%22com.veracode.vosp.api.wrappers%22&rows=20&wt=json" | jq -r ".response.docs[0].latestVersion")
       curl -sS -o veracode-wrapper.jar "https://repo1.maven.org/maven2/com/veracode/vosp/api/wrappers/vosp-api-wrappers-java/${VERACODE_WRAPPER_VERSION}/vosp-api-wrappers-java-${VERACODE_WRAPPER_VERSION}.jar"
       app_id=$(java -jar veracode-wrapper.jar -vid ${VERACODE_API_ID} -vkey ${VERACODE_API_KEY} -action getapplist | grep 'KT_TEST_IDE' | cut -d'"' -f2)
-      build_status=$(java -jar veracode-wrapper.jar -vid ${VERACODE_API_ID} -vkey ${VERACODE_API_KEY} -action getbuildinfo -appid ${app_id} | grep "analysis_unit" | cut -d'"' -f10)
+      build_status=$(java -jar veracode-wrapper.jar -vid ${VERACODE_API_ID} -vkey ${VERACODE_API_KEY} -action getbuildinfo -appid ${app_id} | grep 'analysis_unit' | cut -d'"' -f10)
       if [ ${build_status} == "Results Ready" ]
       then
           build_id=$(java -jar veracode-wrapper.jar -vid ${VERACODE_API_ID} -vkey ${VERACODE_API_KEY} -action getbuildinfo -appid ${app_id} | grep "build_id" | tail -1 | cut -d'"' -f2)
