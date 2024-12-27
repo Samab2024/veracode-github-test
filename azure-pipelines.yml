@@ -47,20 +47,34 @@ steps:
 #     failBuildOnPolicyFail: false
 #     maximumWaitTime: '60'
 
-- task: Veracode Flaw Importer@3
+- task: Bash@3
+  env:
+    VERACODE_API_KEY_ID: $(VERACODE_API_KEY_ID)
+    VERACODE_API_KEY_SECRET: $(VERACODE_API_KEY_SECRET)
   inputs:
-    ConnectionDetailsSelection: 'Service Connection'
-    AnalysisService: 'Veracode API'
-    failBuildIfFlawImporterFails: false
-    veracodeAppProfile: 'aws-verademo-java'
-    scanType: 'Dynamic, Static, SCA'
-    importType: 'All Flaws Violating Policy'
-    workItemType: 'Bug'
-    area: '$(system.teamProject)'
-    overwriteAreaPathInWorkItemsOnImport: true
-    iterationPath: '$(system.teamProject)'
-    overwriteIterationPath: true
-    flawImportLimit: '1'
+    targetType: 'inline'
+    script: |
+      # Write your commands here
+      VERACODE_WRAPPER_VERSION=$(curl -sS "https://search.maven.org/solrsearch/select?q=g:%22com.veracode.vosp.api.wrappers%22&rows=20&wt=json" | jq -r ".response.docs[0].latestVersion")
+      curl -sS -o veracode-wrapper.jar "https://repo1.maven.org/maven2/com/veracode/vosp/api/wrappers/vosp-api-wrappers-java/${VERACODE_WRAPPER_VERSION}/vosp-api-wrappers-java-${VERACODE_WRAPPER_VERSION}.jar"
+      app_id=$(java -jar vosp-api-wrapper-java{version}.jar -vid VERACODE_API_KEY_ID -vkey VERACODE_API_KEY_SECRET -action getapplist | grep 'KT_TEST_IDE' | cut -d'"' -f2)
+      build_id=$(java -jar vosp-api-wrapper-java{version}.jar -vid VERACODE_API_KEY_ID -vkey VERACODE_API_KEY_SECRET -action getbuildinfo -appid ${app_id} | grep "build_id" | tail -1 | cut -d'"' -f2)
+      java -jar vosp-api-wrapper-java{version}.jar -vid VERACODE_API_KEY_ID -vkey VERACODE_API_KEY_SECRET -action detailedreport -buildid ${build_id}
+
+# - task: Veracode Flaw Importer@3
+#   inputs:
+#     ConnectionDetailsSelection: 'Service Connection'
+#     AnalysisService: 'Veracode API'
+#     failBuildIfFlawImporterFails: false
+#     veracodeAppProfile: 'aws-verademo-java'
+#     scanType: 'Dynamic, Static, SCA'
+#     importType: 'All Flaws Violating Policy'
+#     workItemType: 'Bug'
+#     area: '$(system.teamProject)'
+#     overwriteAreaPathInWorkItemsOnImport: true
+#     iterationPath: '$(system.teamProject)'
+#     overwriteIterationPath: true
+#     flawImportLimit: '1'
 
 # - task: VeracodePipelineScan@0
 #   inputs:
