@@ -57,9 +57,10 @@ steps:
       # Write your commands here
       VERACODE_WRAPPER_VERSION=$(curl -sS "https://search.maven.org/solrsearch/select?q=g:%22com.veracode.vosp.api.wrappers%22&rows=20&wt=json" | jq -r ".response.docs[0].latestVersion")
       curl -sS -o veracode-wrapper.jar "https://repo1.maven.org/maven2/com/veracode/vosp/api/wrappers/vosp-api-wrappers-java/${VERACODE_WRAPPER_VERSION}/vosp-api-wrappers-java-${VERACODE_WRAPPER_VERSION}.jar"
-      app_id=$(java -jar veracode-wrapper.jar -vid VERACODE_API_KEY_ID -vkey VERACODE_API_KEY_SECRET -action getapplist | grep 'KT_TEST_IDE' | cut -d'"' -f2)
-      build_id=$(java -jar veracode-wrapper.jar -vid VERACODE_API_KEY_ID -vkey VERACODE_API_KEY_SECRET -action getbuildinfo -appid ${app_id} | grep "build_id" | tail -1 | cut -d'"' -f2)
-      java -jar veracode-wrapper.jar -vid VERACODE_API_KEY_ID -vkey VERACODE_API_KEY_SECRET -action detailedreport -buildid ${build_id} -outputfilepath ~/Downloads/detailedreport_${app_id}_${build_id}.xml
+      app_id=$(java -jar veracode-wrapper.jar -vid ${VERACODE_API_KEY_ID} -vkey ${VERACODE_API_KEY_SECRET} -action getapplist | grep 'KT_TEST_IDE' | cut -d'"' -f2)
+      build_id=$(java -jar veracode-wrapper.jar -vid ${VERACODE_API_KEY_ID} -vkey ${VERACODE_API_KEY_SECRET} -action getbuildinfo -appid ${app_id} | grep "build_id" | tail -1 | cut -d'"' -f2)
+      echo "Fetching Detailed Report for App ID "${app_id}" and Build "${build_id}
+      java -jar veracode-wrapper.jar -vid ${VERACODE_API_KEY_ID} -vkey ${VERACODE_API_KEY_SECRET} -action detailedreport -buildid ${build_id} -outputfilepath ~/Downloads/detailedreport_${app_id}_${build_id}.xml
 
 # - task: Veracode Flaw Importer@3
 #   inputs:
