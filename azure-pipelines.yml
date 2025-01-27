@@ -10,16 +10,16 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-# # - task: Maven@4
-# #   inputs:
-# #     mavenPomFile: 'app/pom.xml'
-# #     publishJUnitResults: true
-# #     testResultsFiles: '**/surefire-reports/TEST-*.xml'
-# #     javaHomeOption: 'JDKVersion'
-# #     mavenVersionOption: 'Default'
-# #     mavenAuthenticateFeed: false
-# #     effectivePomSkip: false
-# #     sonarQubeRunAnalysis: false
+- task: Maven@4
+  inputs:
+    mavenPomFile: 'app/pom.xml'
+    publishJUnitResults: true
+    testResultsFiles: '**/surefire-reports/TEST-*.xml'
+    javaHomeOption: 'JDKVersion'
+    mavenVersionOption: 'Default'
+    mavenAuthenticateFeed: false
+    effectivePomSkip: false
+    sonarQubeRunAnalysis: false
 
 # # - task: Bash@3
 # #   displayName: Veracode CLI SCA & SBOM Generation
@@ -234,5 +234,5 @@ steps:
     apiKey: '${Vera...Key}'
     veracodeAppProfile: '$(system.teamProject)'
     version: '$(build.buildNumber)'
-    filepath: '$(build.artifactstagingdirectory)'
+    filepath: 'app/target/*'
     maximumWaitTime: '360'
